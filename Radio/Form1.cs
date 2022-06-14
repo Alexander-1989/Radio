@@ -316,29 +316,29 @@ namespace Radio
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Location = new Point(INI.Parse("Main", "X"), INI.Parse("Main", "Y"));
-            VolumeScrollBar.Value = INI.Parse("Main", "Volume");
-            materialSwitch1.Checked = INI.Read("Main", "Theme") == "DARK";
-            currentStationFile = INI.Read("Main", "StationList");
+            Location = new Point(INI.Parse("General", "X"), INI.Parse("General", "Y"));
+            VolumeScrollBar.Value = INI.Parse("General", "Volume");
+            materialSwitch1.Checked = INI.Read("General", "Theme") == "DARK";
+            currentStationFile = INI.Read("Station", "StationList");
             if (!File.Exists(currentStationFile))
             {
                 currentStationFile = defaultStationFile;
             }
             InitStationList(currentStationFile);
-            listBox1.Text = INI.Read("Main", "CurrentStation");
+            listBox1.Text = INI.Read("Station", "CurrentStation");
             ShowVolume(100 - VolumeScrollBar.Value);
             PlayStation();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            INI.Write("Main", "X", Location.X);
-            INI.Write("Main", "Y", Location.Y);
+            INI.Write("General", "X", Location.X);
+            INI.Write("General", "Y", Location.Y);
             int volume = !muteBox.Checked ? VolumeScrollBar.Value : lastVolume;
-            INI.Write("Main", "Volume", volume);
-            INI.Write("Main", "Theme", themeManager.Theme);
-            INI.Write("Main", "StationList", currentStationFile);
-            INI.Write("Main", "CurrentStation", $"{currentStation}");
+            INI.Write("General", "Volume", volume);
+            INI.Write("General", "Theme", themeManager.Theme);
+            INI.Write("Station", "StationList", currentStationFile);
+            INI.Write("Station", "CurrentStation", $"{currentStation}");
         }
 
         private void materialSwitch1_CheckedChanged(object sender, EventArgs e)
