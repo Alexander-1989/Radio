@@ -44,6 +44,10 @@ namespace Radio
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyStationAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.byNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.byPlayingCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.byIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -164,9 +168,10 @@ namespace Radio
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyStationAddressToolStripMenuItem});
+            this.copyStationAddressToolStripMenuItem,
+            this.sortToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 70);
             // 
             // copyStationAddressToolStripMenuItem
             // 
@@ -174,6 +179,37 @@ namespace Radio
             this.copyStationAddressToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.copyStationAddressToolStripMenuItem.Text = "Copy Selected Station URL";
             this.copyStationAddressToolStripMenuItem.Click += new System.EventHandler(this.copyStationAddressToolStripMenuItem_Click);
+            // 
+            // sortToolStripMenuItem
+            // 
+            this.sortToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.byNameToolStripMenuItem,
+            this.byIDToolStripMenuItem,
+            this.byPlayingCountToolStripMenuItem});
+            this.sortToolStripMenuItem.Name = "sortToolStripMenuItem";
+            this.sortToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.sortToolStripMenuItem.Text = "Sort";
+            // 
+            // byNameToolStripMenuItem
+            // 
+            this.byNameToolStripMenuItem.Name = "byNameToolStripMenuItem";
+            this.byNameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.byNameToolStripMenuItem.Text = "By Name";
+            this.byNameToolStripMenuItem.Click += new System.EventHandler(this.byNameToolStripMenuItem_Click);
+            // 
+            // byPlayingCountToolStripMenuItem
+            // 
+            this.byPlayingCountToolStripMenuItem.Name = "byPlayingCountToolStripMenuItem";
+            this.byPlayingCountToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.byPlayingCountToolStripMenuItem.Text = "By PlayingCount";
+            this.byPlayingCountToolStripMenuItem.Click += new System.EventHandler(this.byPlayingCountToolStripMenuItem_Click);
+            // 
+            // byIDToolStripMenuItem
+            // 
+            this.byIDToolStripMenuItem.Name = "byIDToolStripMenuItem";
+            this.byIDToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.byIDToolStripMenuItem.Text = "By ID";
+            this.byIDToolStripMenuItem.Click += new System.EventHandler(this.byIDToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -220,6 +256,10 @@ namespace Radio
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem copyStationAddressToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem byNameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem byPlayingCountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem byIDToolStripMenuItem;
     }
 }
 

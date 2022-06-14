@@ -384,6 +384,33 @@ namespace Radio
             }
         }
 
+        private void SortListBox(ListBox listBox, IComparer<RadioStation> comparer)
+        {
+            RadioStation[] stations = new RadioStation[listBox.Items.Count];
+            for (int i = 0; i < stations.Length; i++)
+            {
+                stations[i] = listBox.Items[i] as RadioStation;
+            }
+            Array.Sort(stations, comparer);
+            listBox.Items.Clear();
+            listBox.Items.AddRange(stations);
+        }
+
+        private void byNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SortListBox(listBox1, RadioStation.SortByName);
+        }
+
+        private void byIDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SortListBox(listBox1, RadioStation.SortByID);
+        }
+
+        private void byPlayingCountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SortListBox(listBox1, RadioStation.SortByPlayingCount);
+        }
+
         //protected override void WndProc(ref Message m)
         //{
         //    if (m.Msg == WM.WM_POWERBROADCAST &&
