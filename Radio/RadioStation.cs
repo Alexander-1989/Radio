@@ -13,14 +13,6 @@ namespace Radio
             }
         }
 
-        private class SortByIDHelper : IComparer<RadioStation>
-        {
-            public int Compare(RadioStation x, RadioStation y)
-            {
-                return x.ID.CompareTo(y.ID);
-            }
-        }
-
         private class SortByPlayingCountHelper : IComparer<RadioStation>
         {
             public int Compare(RadioStation x, RadioStation y)
@@ -80,12 +72,10 @@ namespace Radio
 
         public int CompareTo(RadioStation other)
         {
-            return Name.CompareTo(other.Name);
+            return ID.CompareTo(other.ID);
         }
 
-        public static IComparer<RadioStation> SortByName => new SortByPlayingCountHelper();
-
-        public static IComparer<RadioStation> SortByID => new SortByIDHelper();
+        public static IComparer<RadioStation> SortByName => new SortByNameHelper();
 
         public static IComparer<RadioStation> SortByPlayingCount => new SortByPlayingCountHelper();
     }

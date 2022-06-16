@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Microsoft.Win32;
+using System.Linq;
 
 namespace Radio
 {
@@ -386,11 +387,7 @@ namespace Radio
 
         private void SortListBox(ListBox listBox, IComparer<RadioStation> comparer)
         {
-            RadioStation[] stations = new RadioStation[listBox.Items.Count];
-            for (int i = 0; i < stations.Length; i++)
-            {
-                stations[i] = listBox.Items[i] as RadioStation;
-            }
+            RadioStation[] stations = listBox1.Items.OfType<RadioStation>().ToArray();
             Array.Sort(stations, comparer);
             listBox.Items.Clear();
             listBox.Items.AddRange(stations);
@@ -403,7 +400,7 @@ namespace Radio
 
         private void byIDToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SortListBox(listBox1, RadioStation.SortByID);
+            SortListBox(listBox1, null);
         }
 
         private void byPlayingCountToolStripMenuItem_Click(object sender, EventArgs e)
