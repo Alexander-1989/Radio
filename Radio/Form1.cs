@@ -431,6 +431,7 @@ namespace Radio
                     SortListBox(listBox1);
                     break;
             }
+            listBox1.SelectedItem = currentStation;
         }
 
         //protected override void WndProc(ref Message m)
