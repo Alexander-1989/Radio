@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace Radio
 {
-    class RadioStation : IRadioStation, IComparable<RadioStation>
+    [Serializable]
+    public class RadioStation : IRadioStation, IComparable<RadioStation>
     {
         private class SortByNameHelper : IComparer<RadioStation>
         {
@@ -17,52 +18,29 @@ namespace Radio
         {
             public int Compare(RadioStation x, RadioStation y)
             {
-                return y.PlayingCount.CompareTo(x.PlayingCount);
+                return y.PlayCount.CompareTo(x.PlayCount);
             }
         }
 
-        private readonly string _name;
-        private readonly string _url;
-        private readonly int _id;
-        private int _playCount;
+        public string Name { get; set; }
+        public string URL { get; set; }
+        public int ID { get; set; }
+        public uint PlayCount { get; set; }
 
-        public string Name
+        public RadioStation()
         {
-            get
-            {
-                return _name;
-            }
-        }
-        public string URL
-        {
-            get
-            {
-                _playCount++;
-                return _url;
-            }
-        }
-        public int ID
-        {
-            get
-            {
-                return _id;
-            }
-        }
-
-        public int PlayingCount
-        {
-            get
-            {
-                return _playCount;
-            }
+            Name = string.Empty;
+            URL = string.Empty;
+            ID = 0;
+            PlayCount = 0;
         }
 
         public RadioStation(string name, string url, int id)
         {
-            _name = name;
-            _url = url;
-            _id = id;
-            _playCount = 0;
+            Name = name;
+            URL = url;
+            ID = id;
+            PlayCount = 0;
         }
 
         public override string ToString()

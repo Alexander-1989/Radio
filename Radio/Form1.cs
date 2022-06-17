@@ -7,6 +7,7 @@ using MaterialSkin;
 using MaterialSkin.Controls;
 using Microsoft.Win32;
 using System.Linq;
+using Radio.Service;
 
 namespace Radio
 {
@@ -21,7 +22,6 @@ namespace Radio
         private MediaPlayerState playerState;
         private RadioStation currentStation;
         private string lastText;
-        private string currentStationFile;
         private int lastVolume;
         private int Volume
         {
@@ -37,10 +37,12 @@ namespace Radio
         private const int volumeInterval = 4050;
         private const int maxLengthString = 24;
         private readonly INIFile INI = new INIFile();
+        private readonly Serrializer serrializer = new Serrializer();
         private readonly MaterialSkinManager themeManager = MaterialSkinManager.Instance;
-        private readonly List<RadioStation> stationList = new List<RadioStation>();
+        private List<RadioStation> stationList = null;
         private readonly MediaPlayer.MediaPlayer mediaPlayer = new MediaPlayer.MediaPlayer();
-        private readonly string defaultStationFile = Path.Combine(Environment.CurrentDirectory, "Stations.txt");
+        private readonly string defaultTxtStationFile = Path.Combine(Environment.CurrentDirectory, "Stations.txt");
+        private readonly string defaultXmlStationFile = Path.Combine(Environment.CurrentDirectory, "Stations.xml");
 
         public Form1()
         {
@@ -81,42 +83,44 @@ namespace Radio
             string[] dropFiles = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             if (!dropFiles.IsNullOrEmpty() && Path.GetExtension(dropFiles[0]).Equals(".txt"))
             {
-                currentStationFile = dropFiles[0];
-                InitStationList(currentStationFile);
+                listBox1.Items.Clear();
+                stationList.Clear();
+                stationList = FirstInitStationList(dropFiles[0]);
+                listBox1.Items.AddRange(stationList.ToArray());
             }
         }
 
-        private void InitStationList(string fileName)
+        private List<RadioStation> FirstInitStationList(string fileName)
         {
-            listBox1.Items.Clear();
-            stationList.Clear();
-
-            try
+            List<RadioStation> stations = new List<RadioStation>();
+            if (File.Exists(fileName))
             {
-                using (StreamReader reader = new StreamReader(fileName))
+                try
                 {
-                    int id = 1;
-                    int index = -1;
-                    string prefix = "http";
-
-                    while (!reader.EndOfStream)
+                    using (StreamReader reader = new StreamReader(fileName))
                     {
-                        string line = reader.ReadLine();
+                        int id = 1;
+                        int index = -1;
+                        string prefix = "http";
 
-                        if (!string.IsNullOrEmpty(line) &&
-                            line[0] != '#' && line[0] != ';' &&
-                            (index = line.LastIndexOf(prefix)) > -1)
+                        while (!reader.EndOfStream)
                         {
-                            string name = line.Substring(0, index - 1).Trim();
-                            string url = line.Substring(index).Trim();
-                            RadioStation station = new RadioStation(name, url, id++);
-                            stationList.Add(station);
-                            listBox1.Items.Add(station);
+                            string line = reader.ReadLine();
+
+                            if (!string.IsNullOrEmpty(line) &&
+                                line[0] != '#' && line[0] != ';' &&
+                                (index = line.LastIndexOf(prefix)) > -1)
+                            {
+                                string name = line.Substring(0, index - 1).Trim();
+                                string url = line.Substring(index).Trim();
+                                stations.Add(new RadioStation(name, url, id++));
+                            }
                         }
                     }
                 }
+                catch (Exception) { }
             }
-            catch (Exception) { }
+            return stations;
         }
 
         private void ShowVolume(int volume)
@@ -172,6 +176,7 @@ namespace Radio
                 }
 
                 Text = lastText;
+                currentStation.PlayCount++;
                 mediaPlayer.Open(currentStation.URL);
                 playerState = MediaPlayerState.Playing;
             }
@@ -320,12 +325,26 @@ namespace Radio
             Location = new Point(INI.Parse("General", "X"), INI.Parse("General", "Y"));
             VolumeScrollBar.Value = INI.Parse("General", "Volume");
             materialSwitch1.Checked = INI.Read("General", "Theme") == "DARK";
-            currentStationFile = INI.Read("Station", "StationList");
-            if (!File.Exists(currentStationFile))
+
+            if (File.Exists(defaultXmlStationFile))
             {
-                currentStationFile = defaultStationFile;
+                stationList = serrializer.Read(defaultXmlStationFile);
             }
-            InitStationList(currentStationFile);
+            else if (File.Exists(defaultTxtStationFile))
+            {
+                stationList = FirstInitStationList(defaultTxtStationFile);
+            }
+            else
+            {
+                stationList = new List<RadioStation>();
+            }
+
+            listBox1.Items.AddRange(stationList.ToArray());
+            string sortBy = INI.Read("General", "Sort by");
+            if (!string.IsNullOrEmpty(sortBy) && !toolStripComboBox1.Text.Equals(sortBy))
+            {
+                toolStripComboBox1.Text = sortBy;
+            }
             listBox1.Text = INI.Read("Station", "CurrentStation");
             ShowVolume(100 - VolumeScrollBar.Value);
             PlayStation();
@@ -338,8 +357,12 @@ namespace Radio
             int volume = !muteBox.Checked ? VolumeScrollBar.Value : lastVolume;
             INI.Write("General", "Volume", volume);
             INI.Write("General", "Theme", themeManager.Theme);
-            INI.Write("Station", "StationList", currentStationFile);
+            INI.Write("General", "Sort by", toolStripComboBox1.Text);
             INI.Write("Station", "CurrentStation", $"{currentStation}");
+            if (!listBox1.IsEmpty())
+            {
+                serrializer.Write(defaultXmlStationFile, stationList);
+            }
         }
 
         private void materialSwitch1_CheckedChanged(object sender, EventArgs e)
@@ -385,7 +408,7 @@ namespace Radio
             }
         }
 
-        private void SortListBox(ListBox listBox, IComparer<RadioStation> comparer)
+        private void SortListBox(ListBox listBox, IComparer<RadioStation> comparer = null)
         {
             RadioStation[] stations = listBox1.Items.OfType<RadioStation>().ToArray();
             Array.Sort(stations, comparer);
@@ -393,19 +416,21 @@ namespace Radio
             listBox.Items.AddRange(stations);
         }
 
-        private void byNameToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toolStripComboBox1_TextChanged(object sender, EventArgs e)
         {
-            SortListBox(listBox1, RadioStation.SortByName);
-        }
-
-        private void byIDToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SortListBox(listBox1, null);
-        }
-
-        private void byPlayingCountToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SortListBox(listBox1, RadioStation.SortByPlayingCount);
+            ToolStripComboBox comboBox = sender as ToolStripComboBox;
+            switch (comboBox.Text)
+            {
+                case "Name":
+                    SortListBox(listBox1, RadioStation.SortByName);
+                    break;
+                case "PlayCount":
+                    SortListBox(listBox1, RadioStation.SortByPlayingCount);
+                    break;
+                default:
+                    SortListBox(listBox1);
+                    break;
+            }
         }
 
         //protected override void WndProc(ref Message m)

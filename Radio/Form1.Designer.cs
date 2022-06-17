@@ -45,9 +45,7 @@ namespace Radio
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyStationAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.byNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.byPlayingCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.byIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -183,33 +181,21 @@ namespace Radio
             // sortToolStripMenuItem
             // 
             this.sortToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.byNameToolStripMenuItem,
-            this.byIDToolStripMenuItem,
-            this.byPlayingCountToolStripMenuItem});
+            this.toolStripComboBox1});
             this.sortToolStripMenuItem.Name = "sortToolStripMenuItem";
             this.sortToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.sortToolStripMenuItem.Text = "Sort";
+            this.sortToolStripMenuItem.Text = "Sort By";
             // 
-            // byNameToolStripMenuItem
+            // toolStripComboBox1
             // 
-            this.byNameToolStripMenuItem.Name = "byNameToolStripMenuItem";
-            this.byNameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.byNameToolStripMenuItem.Text = "By Name";
-            this.byNameToolStripMenuItem.Click += new System.EventHandler(this.byNameToolStripMenuItem_Click);
-            // 
-            // byPlayingCountToolStripMenuItem
-            // 
-            this.byPlayingCountToolStripMenuItem.Name = "byPlayingCountToolStripMenuItem";
-            this.byPlayingCountToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.byPlayingCountToolStripMenuItem.Text = "By PlayingCount";
-            this.byPlayingCountToolStripMenuItem.Click += new System.EventHandler(this.byPlayingCountToolStripMenuItem_Click);
-            // 
-            // byIDToolStripMenuItem
-            // 
-            this.byIDToolStripMenuItem.Name = "byIDToolStripMenuItem";
-            this.byIDToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.byIDToolStripMenuItem.Text = "By ID";
-            this.byIDToolStripMenuItem.Click += new System.EventHandler(this.byIDToolStripMenuItem_Click);
+            this.toolStripComboBox1.Items.AddRange(new object[] {
+            "Default",
+            "Name",
+            "PlayCount"});
+            this.toolStripComboBox1.Name = "toolStripComboBox1";
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
+            this.toolStripComboBox1.Text = "Default";
+            this.toolStripComboBox1.TextChanged += new System.EventHandler(this.toolStripComboBox1_TextChanged);
             // 
             // Form1
             // 
@@ -257,9 +243,7 @@ namespace Radio
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem copyStationAddressToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem byNameToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem byPlayingCountToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem byIDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
     }
 }
 
