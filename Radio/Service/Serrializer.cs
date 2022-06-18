@@ -9,7 +9,7 @@ namespace Radio.Service
     {
         private readonly XmlSerializer serializer = new XmlSerializer(typeof(List<RadioStation>));
 
-        public void Write(string fileName, List<RadioStation> list)
+        public void WriteToFile(string fileName, List<RadioStation> list)
         {
             using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
@@ -17,7 +17,7 @@ namespace Radio.Service
             }
         }
 
-        public List<RadioStation> Read(string fileName)
+        public List<RadioStation> ReadFromFile(string fileName)
         {
             try
             {

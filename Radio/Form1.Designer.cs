@@ -169,7 +169,7 @@ namespace Radio
             this.copyStationAddressToolStripMenuItem,
             this.sortToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 48);
             // 
             // copyStationAddressToolStripMenuItem
             // 
@@ -195,7 +195,7 @@ namespace Radio
             this.toolStripComboBox1.Name = "toolStripComboBox1";
             this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
             this.toolStripComboBox1.Text = "Default";
-            this.toolStripComboBox1.TextChanged += new System.EventHandler(this.toolStripComboBox1_TextChanged);
+            this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
             // 
             // Form1
             // 

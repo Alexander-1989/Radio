@@ -328,7 +328,7 @@ namespace Radio
 
             if (File.Exists(defaultXmlStationFile))
             {
-                stationList = serrializer.Read(defaultXmlStationFile);
+                stationList = serrializer.ReadFromFile(defaultXmlStationFile);
             }
             else if (File.Exists(defaultTxtStationFile))
             {
@@ -361,7 +361,7 @@ namespace Radio
             INI.Write("Station", "CurrentStation", $"{currentStation}");
             if (!listBox1.IsEmpty())
             {
-                serrializer.Write(defaultXmlStationFile, stationList);
+                serrializer.WriteToFile(defaultXmlStationFile, stationList);
             }
         }
 
@@ -416,7 +416,7 @@ namespace Radio
             listBox.Items.AddRange(stations);
         }
 
-        private void toolStripComboBox1_TextChanged(object sender, EventArgs e)
+        private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             ToolStripComboBox comboBox = sender as ToolStripComboBox;
             switch (comboBox.Text)

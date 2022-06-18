@@ -27,13 +27,7 @@ namespace Radio
         public int ID { get; set; }
         public uint PlayCount { get; set; }
 
-        public RadioStation()
-        {
-            Name = string.Empty;
-            URL = string.Empty;
-            ID = 0;
-            PlayCount = 0;
-        }
+        public RadioStation() : this("", "", 0) { }
 
         public RadioStation(string name, string url, int id)
         {
