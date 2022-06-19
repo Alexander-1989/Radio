@@ -14,5 +14,10 @@ namespace Radio
         {
             return array == null || array.Length == 0;
         }
+
+        internal static T GetFirst<T>(this T[] array)
+        {
+            return array.IsNullOrEmpty() ? default : array[0];
+        }
     }
 }

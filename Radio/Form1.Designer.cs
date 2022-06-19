@@ -30,6 +30,7 @@ namespace Radio
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -46,12 +47,21 @@ namespace Radio
             this.copyStationAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadStationsFromTextFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(6, 301);
+            this.button1.Location = new System.Drawing.Point(10, 298);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(244, 28);
             this.button1.TabIndex = 2;
@@ -62,14 +72,14 @@ namespace Radio
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(6, 109);
+            this.listBox1.Location = new System.Drawing.Point(10, 101);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(289, 160);
+            this.listBox1.Size = new System.Drawing.Size(285, 160);
             this.listBox1.TabIndex = 0;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(6, 335);
+            this.button2.Location = new System.Drawing.Point(10, 332);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(244, 28);
             this.button2.TabIndex = 3;
@@ -79,14 +89,14 @@ namespace Radio
             // 
             // SearchBox
             // 
-            this.SearchBox.Location = new System.Drawing.Point(6, 270);
+            this.SearchBox.Location = new System.Drawing.Point(10, 267);
             this.SearchBox.Name = "SearchBox";
             this.SearchBox.Size = new System.Drawing.Size(244, 20);
             this.SearchBox.TabIndex = 1;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(6, 403);
+            this.button4.Location = new System.Drawing.Point(10, 400);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(244, 28);
             this.button4.TabIndex = 5;
@@ -96,7 +106,7 @@ namespace Radio
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(6, 369);
+            this.button3.Location = new System.Drawing.Point(10, 366);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(244, 28);
             this.button3.TabIndex = 4;
@@ -107,15 +117,15 @@ namespace Radio
             // VolumeScrollBar
             // 
             this.VolumeScrollBar.LargeChange = 1;
-            this.VolumeScrollBar.Location = new System.Drawing.Point(268, 304);
+            this.VolumeScrollBar.Location = new System.Drawing.Point(271, 301);
             this.VolumeScrollBar.Name = "VolumeScrollBar";
-            this.VolumeScrollBar.Size = new System.Drawing.Size(17, 126);
+            this.VolumeScrollBar.Size = new System.Drawing.Size(17, 127);
             this.VolumeScrollBar.TabIndex = 6;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(256, 270);
+            this.label1.Location = new System.Drawing.Point(259, 267);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 9;
@@ -125,7 +135,7 @@ namespace Radio
             // 
             this.materialSwitch1.AutoSize = true;
             this.materialSwitch1.Depth = 0;
-            this.materialSwitch1.Location = new System.Drawing.Point(1, 69);
+            this.materialSwitch1.Location = new System.Drawing.Point(54, 64);
             this.materialSwitch1.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch1.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialSwitch1.MouseState = MaterialSkin.MouseState.HOVER;
@@ -142,7 +152,7 @@ namespace Radio
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.Window;
             this.label2.Enabled = false;
-            this.label2.Location = new System.Drawing.Point(8, 273);
+            this.label2.Location = new System.Drawing.Point(12, 270);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(50, 13);
             this.label2.TabIndex = 11;
@@ -151,7 +161,7 @@ namespace Radio
             // muteBox
             // 
             this.muteBox.AutoSize = true;
-            this.muteBox.Location = new System.Drawing.Point(270, 288);
+            this.muteBox.Location = new System.Drawing.Point(273, 285);
             this.muteBox.Name = "muteBox";
             this.muteBox.Size = new System.Drawing.Size(15, 14);
             this.muteBox.TabIndex = 7;
@@ -197,12 +207,75 @@ namespace Radio
             this.toolStripComboBox1.Text = "Default";
             this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Filter = "(Text File)|*.txt";
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(3, 64);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(50, 33);
+            this.menuStrip1.TabIndex = 13;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // menuToolStripMenuItem
+            // 
+            this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadStationsFromTextFileToolStripMenuItem,
+            this.playToolStripMenuItem,
+            this.stopToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.menuToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
+            this.menuToolStripMenuItem.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.menuToolStripMenuItem.Size = new System.Drawing.Size(42, 29);
+            this.menuToolStripMenuItem.Text = "Menu";
+            // 
+            // loadStationsFromTextFileToolStripMenuItem
+            // 
+            this.loadStationsFromTextFileToolStripMenuItem.Name = "loadStationsFromTextFileToolStripMenuItem";
+            this.loadStationsFromTextFileToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.loadStationsFromTextFileToolStripMenuItem.Text = "Load Stations From Text File";
+            this.loadStationsFromTextFileToolStripMenuItem.Click += new System.EventHandler(this.loadStationsFromTextFileToolStripMenuItem_Click);
+            // 
+            // playToolStripMenuItem
+            // 
+            this.playToolStripMenuItem.Name = "playToolStripMenuItem";
+            this.playToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.playToolStripMenuItem.Text = "Play";
+            this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
+            // 
+            // stopToolStripMenuItem
+            // 
+            this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.stopToolStripMenuItem.Text = "Stop";
+            this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Internet Radio";
+            this.notifyIcon1.Visible = true;
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(301, 438);
+            this.ClientSize = new System.Drawing.Size(305, 438);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.muteBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.materialSwitch1);
@@ -214,13 +287,18 @@ namespace Radio
             this.Controls.Add(this.button2);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.ShowInTaskbar = false;
+            this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Internet Radio";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.contextMenuStrip1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,6 +322,14 @@ namespace Radio
         private System.Windows.Forms.ToolStripMenuItem copyStationAddressToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadStationsFromTextFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 

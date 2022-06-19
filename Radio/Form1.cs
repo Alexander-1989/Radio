@@ -47,6 +47,7 @@ namespace Radio
         public Form1()
         {
             InitializeComponent();
+            notifyIcon1.Click += (s, e) => WindowState = FormWindowState.Normal;
             SystemEvents.SessionSwitch += (s, e) => RefreshRadio();
             DragEnter += Form1_DragEnter;
             DragDrop += Form1_DragDrop;
@@ -80,17 +81,22 @@ namespace Radio
 
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
-            string[] dropFiles = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-            if (!dropFiles.IsNullOrEmpty() && Path.GetExtension(dropFiles[0]).Equals(".txt"))
+            string fileName = ((string[])e.Data.GetData(DataFormats.FileDrop, false)).GetFirst();
+            if (fileName?.Length > 0 && Path.GetExtension(fileName).Equals(".txt"))
             {
-                listBox1.Items.Clear();
-                stationList.Clear();
-                stationList = FirstInitStationList(dropFiles[0]);
-                listBox1.Items.AddRange(stationList.ToArray());
+                ReadStationList(fileName);
             }
         }
 
-        private List<RadioStation> FirstInitStationList(string fileName)
+        private void ReadStationList(string fileName)
+        {
+            listBox1.Items.Clear();
+            stationList.Clear();
+            stationList = InitStationList(fileName);
+            listBox1.Items.AddRange(stationList.ToArray());
+        }
+
+        private List<RadioStation> InitStationList(string fileName)
         {
             List<RadioStation> stations = new List<RadioStation>();
             if (File.Exists(fileName))
@@ -332,7 +338,7 @@ namespace Radio
             }
             else if (File.Exists(defaultTxtStationFile))
             {
-                stationList = FirstInitStationList(defaultTxtStationFile);
+                stationList = InitStationList(defaultTxtStationFile);
             }
             else
             {
@@ -418,8 +424,7 @@ namespace Radio
 
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ToolStripComboBox comboBox = sender as ToolStripComboBox;
-            switch (comboBox.Text)
+            switch (toolStripComboBox1.Text)
             {
                 case "Name":
                     SortListBox(listBox1, RadioStation.SortByName);
@@ -432,6 +437,29 @@ namespace Radio
                     break;
             }
             listBox1.SelectedItem = currentStation;
+        }
+
+        private void loadStationsFromTextFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                ReadStationList(openFileDialog1.FileName);
+            }
+        }
+
+        private void playToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PlayStation();
+        }
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Stop();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         //protected override void WndProc(ref Message m)
