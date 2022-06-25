@@ -47,7 +47,6 @@ namespace Radio
         public Form1()
         {
             InitializeComponent();
-            notifyIcon1.Click += (s, e) => WindowState = FormWindowState.Normal;
             SystemEvents.SessionSwitch += (s, e) => RefreshRadio();
             DragEnter += Form1_DragEnter;
             DragDrop += Form1_DragDrop;
@@ -92,8 +91,21 @@ namespace Radio
         {
             listBox1.Items.Clear();
             stationList.Clear();
-            stationList = InitStationList(fileName);
-            listBox1.Items.AddRange(stationList.ToArray());
+            string extension = Path.GetExtension(fileName);
+
+            if (extension.Equals(".txt"))
+            {
+                stationList = InitStationList(fileName);
+            }
+            else if (extension.Equals(".xml"))
+            {
+                stationList = serrializer.ReadFromFile(fileName);
+            }
+
+            if (stationList?.Count > 0)
+            {
+                listBox1.Items.AddRange(stationList.ToArray());
+            }
         }
 
         private List<RadioStation> InitStationList(string fileName)
@@ -345,12 +357,17 @@ namespace Radio
                 stationList = new List<RadioStation>();
             }
 
-            listBox1.Items.AddRange(stationList.ToArray());
+            if (stationList?.Count > 0)
+            {
+                listBox1.Items.AddRange(stationList.ToArray());
+            }
+
             string sortBy = INI.Read("General", "Sort by");
             if (!string.IsNullOrEmpty(sortBy) && !toolStripComboBox1.Text.Equals(sortBy))
             {
                 toolStripComboBox1.Text = sortBy;
             }
+
             listBox1.Text = INI.Read("Station", "CurrentStation");
             ShowVolume(100 - VolumeScrollBar.Value);
             PlayStation();
@@ -441,6 +458,7 @@ namespace Radio
 
         private void loadStationsFromTextFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            openFileDialog1.Filter = "Text File|*.txt";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 ReadStationList(openFileDialog1.FileName);
@@ -449,12 +467,26 @@ namespace Radio
 
         private void playToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PlayStation();
+            openFileDialog1.Filter = "XML File|*.xml";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string sourceFile = openFileDialog1.FileName;
+                string destFile = Path.Combine(Environment.CurrentDirectory, "Stations.xml");
+                File.Copy(sourceFile, destFile, true);
+                ReadStationList(sourceFile);
+            }
         }
 
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Stop();
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = saveFileDialog1.FileName;
+                if (!string.IsNullOrEmpty(fileName) && stationList?.Count > 0)
+                {
+                    serrializer.WriteToFile(fileName, stationList);
+                }
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
