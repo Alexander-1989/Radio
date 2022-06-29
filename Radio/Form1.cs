@@ -118,19 +118,20 @@ namespace Radio
                     using (StreamReader reader = new StreamReader(fileName))
                     {
                         int id = 1;
-                        int index = -1;
                         string prefix = "http";
 
                         while (!reader.EndOfStream)
                         {
+                            int startIndex = 0;
+                            int endIndex = -1;
                             string line = reader.ReadLine();
 
-                            if (!string.IsNullOrEmpty(line) &&
-                                line[0] != '#' && line[0] != ';' &&
-                                (index = line.LastIndexOf(prefix)) > -1)
+                            if (!string.IsNullOrEmpty(line) && line[0] != '#' && line[0] != ';' && (endIndex = line.IndexOf(prefix)) > -1)
                             {
-                                string name = line.Substring(0, index - 1).Trim();
-                                string url = line.Substring(index).Trim();
+                                string name = line.Substring(startIndex, endIndex - 1).Trim();
+                                startIndex = endIndex;
+                                endIndex = line.IndexOf(' ', startIndex);
+                                string url = endIndex < startIndex ? line.Substring(startIndex) : line.Substring(startIndex, endIndex - startIndex);
                                 stations.Add(new RadioStation(name, url, id++));
                             }
                         }
