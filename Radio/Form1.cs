@@ -238,12 +238,19 @@ namespace Radio
             }
         }
 
-        private void Buttons_KeyDown(object sender, KeyEventArgs e)
+        private void KeysEvent(Keys key)
         {
-            switch (e.KeyData)
+            switch (key)
             {
+                case Keys.Enter:
+                case Keys.P:
+                    PlayStation();
+                    break;
                 case Keys.M:
                     muteBox.Checked = !muteBox.Checked;
+                    break;
+                case Keys.S:
+                    Stop();
                     break;
                 case Keys.Escape:
                     Application.Exit();
@@ -251,20 +258,17 @@ namespace Radio
             }
         }
 
+        private void Buttons_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData != Keys.Enter)
+            {
+                KeysEvent(e.KeyData);
+            }
+        }
+
         private void ListBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyData)
-            {
-                case Keys.Enter:
-                    PlayStation();
-                    break;
-                case Keys.M:
-                    muteBox.Checked = !muteBox.Checked;
-                    break;
-                case Keys.Escape:
-                    Application.Exit();
-                    break;
-            }
+            KeysEvent(e.KeyData);
         }
 
         private void TextBox1_KeyDown(object sender, KeyEventArgs e)
@@ -432,12 +436,28 @@ namespace Radio
             }
         }
 
+        private void ReIndexStations(List<RadioStation> stationList)
+        {
+            for (int i = 0; i < stationList.Count; i++)
+            {
+                stationList[i].ID = i + 1;
+            }
+        }
+
+        private void AddItems(RadioStation[] list)
+        {
+            listBox1.Items.Clear();
+            listBox1.Items.AddRange(list);
+        }
+
         private void SortListBox(ListBox listBox, IComparer<RadioStation> comparer = null)
         {
-            RadioStation[] stations = listBox1.Items.OfType<RadioStation>().ToArray();
-            Array.Sort(stations, comparer);
-            listBox.Items.Clear();
-            listBox.Items.AddRange(stations);
+            if (listBox != null)
+            {
+                RadioStation[] stations = listBox1.Items.OfType<RadioStation>().ToArray();
+                Array.Sort(stations, comparer);
+                AddItems(stations);
+            }
         }
 
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -493,6 +513,13 @@ namespace Radio
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void deleteSelectedStationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            stationList.Remove((RadioStation)listBox1.SelectedItem);
+            ReIndexStations(stationList);
+            AddItems(stationList.ToArray());
         }
 
         //protected override void WndProc(ref Message m)

@@ -54,6 +54,7 @@ namespace Radio
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.deleteSelectedStationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -176,9 +177,10 @@ namespace Radio
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyStationAddressToolStripMenuItem,
-            this.sortToolStripMenuItem});
+            this.sortToolStripMenuItem,
+            this.deleteSelectedStationToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 92);
             // 
             // copyStationAddressToolStripMenuItem
             // 
@@ -266,6 +268,13 @@ namespace Radio
             // 
             this.saveFileDialog1.Filter = "XML File|*.xml";
             // 
+            // deleteSelectedStationToolStripMenuItem
+            // 
+            this.deleteSelectedStationToolStripMenuItem.Name = "deleteSelectedStationToolStripMenuItem";
+            this.deleteSelectedStationToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.deleteSelectedStationToolStripMenuItem.Text = "Delete selected station";
+            this.deleteSelectedStationToolStripMenuItem.Click += new System.EventHandler(this.deleteSelectedStationToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -326,6 +335,7 @@ namespace Radio
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem deleteSelectedStationToolStripMenuItem;
     }
 }
 
