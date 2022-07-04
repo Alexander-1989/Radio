@@ -100,24 +100,18 @@ namespace Radio
             stationList?.Clear();
             string extension = Path.GetExtension(fileName);
 
-            if (!File.Exists(fileName))
+            if (extension == ".txt")
+            {
+                stationList = InitStationList(fileName);
+            }
+            else if (extension == ".xml")
+            {
+                stationList = serrializer.ReadFromFile(fileName);
+            }
+
+            if (stationList == null)
             {
                 stationList = new List<RadioStation>();
-            }
-            else
-            {
-                switch (extension)
-                {
-                    case ".txt":
-                        stationList = InitStationList(fileName);
-                        break;
-                    case ".xml":
-                        stationList = serrializer.ReadFromFile(fileName);
-                        break;
-                    default:
-                        stationList = new List<RadioStation>();
-                        break;
-                }
             }
 
             if (stationList?.Count > 0)
@@ -390,7 +384,7 @@ namespace Radio
             int volume = !muteBox.Checked ? VolumeScrollBar.Value : lastVolume;
             INI.Write("General", "Volume", volume);
             INI.Write("General", "Theme", themeManager.Theme);
-            INI.Write("General", "Sort by", sort.ToString());
+            INI.Write("General", "Sort by", sort);
             INI.Write("Station", "CurrentStation", $"{currentStation}");
             if (!listBox1.IsEmpty())
             {
