@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace Radio
 {
+    public enum StationSort : byte
+    {
+        Default,
+        Name,
+        PlayCount
+    }
+
     [Serializable]
     public class RadioStation : IRadioStation, IComparable<RadioStation>
     {

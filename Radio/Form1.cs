@@ -21,6 +21,7 @@ namespace Radio
 
         private MediaPlayerState playerState;
         private RadioStation currentStation;
+        private StationSort sort;
         private string lastText;
         private int lastVolume;
         private int Volume
@@ -81,25 +82,42 @@ namespace Radio
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
             string fileName = ((string[])e.Data.GetData(DataFormats.FileDrop, false)).GetFirst();
-            if (fileName?.Length > 0 && Path.GetExtension(fileName).Equals(".txt"))
+            if (fileName?.Length > 0)
             {
                 ReadStationList(fileName);
             }
         }
 
+        private void ShowMessageBox(string message)
+        {
+            MsgBox messageBox = new MsgBox(message);
+            messageBox.Show(this);
+        }
+
         private void ReadStationList(string fileName)
         {
             listBox1.Items.Clear();
-            stationList.Clear();
+            stationList?.Clear();
             string extension = Path.GetExtension(fileName);
 
-            if (extension.Equals(".txt"))
+            if (!File.Exists(fileName))
             {
-                stationList = InitStationList(fileName);
+                stationList = new List<RadioStation>();
             }
-            else if (extension.Equals(".xml"))
+            else
             {
-                stationList = serrializer.ReadFromFile(fileName);
+                switch (extension)
+                {
+                    case ".txt":
+                        stationList = InitStationList(fileName);
+                        break;
+                    case ".xml":
+                        stationList = serrializer.ReadFromFile(fileName);
+                        break;
+                    default:
+                        stationList = new List<RadioStation>();
+                        break;
+                }
             }
 
             if (stationList?.Count > 0)
@@ -236,6 +254,8 @@ namespace Radio
             {
                 label2.Visible = false;
             }
+
+            SortListBox(listBox1, sort);
         }
 
         private void KeysEvent(Keys key)
@@ -349,28 +369,13 @@ namespace Radio
             VolumeScrollBar.Value = INI.Parse("General", "Volume");
             materialSwitch1.Checked = INI.Read("General", "Theme") == "DARK";
 
-            if (File.Exists(defaultXmlStationFile))
-            {
-                stationList = serrializer.ReadFromFile(defaultXmlStationFile);
-            }
-            else if (File.Exists(defaultTxtStationFile))
-            {
-                stationList = InitStationList(defaultTxtStationFile);
-            }
-            else
-            {
-                stationList = new List<RadioStation>();
-            }
+            string fileName = File.Exists(defaultXmlStationFile) ? defaultXmlStationFile : defaultTxtStationFile;
+            ReadStationList(fileName);
+            Enum.TryParse(INI.Read("General", "Sort by"), out sort);
 
-            if (stationList?.Count > 0)
+            if (toolStripComboBox1.Text != $"{sort}")
             {
-                listBox1.Items.AddRange(stationList.ToArray());
-            }
-
-            string sortBy = INI.Read("General", "Sort by");
-            if (!string.IsNullOrEmpty(sortBy) && !toolStripComboBox1.Text.Equals(sortBy))
-            {
-                toolStripComboBox1.Text = sortBy;
+                toolStripComboBox1.Text = $"{sort}";
             }
 
             listBox1.Text = INI.Read("Station", "CurrentStation");
@@ -385,7 +390,7 @@ namespace Radio
             int volume = !muteBox.Checked ? VolumeScrollBar.Value : lastVolume;
             INI.Write("General", "Volume", volume);
             INI.Write("General", "Theme", themeManager.Theme);
-            INI.Write("General", "Sort by", toolStripComboBox1.Text);
+            INI.Write("General", "Sort by", sort.ToString());
             INI.Write("Station", "CurrentStation", $"{currentStation}");
             if (!listBox1.IsEmpty())
             {
@@ -421,8 +426,7 @@ namespace Radio
             if (listBox1.SelectedItem is RadioStation station)
             {
                 Clipboard.SetText(station.URL);
-                MsgBox message = new MsgBox($"URL station \"{station.Name}\" copied");
-                message.Show(this);
+                ShowMessageBox($"URL station \"{station.Name}\" copied");
             }
         }
 
@@ -436,45 +440,48 @@ namespace Radio
             }
         }
 
-        private void ReIndexStations(List<RadioStation> stationList)
+        private void RemoveStationsFromList(List<RadioStation> stationList, RadioStation item)
         {
+            stationList.Remove(item);
             for (int i = 0; i < stationList.Count; i++)
             {
                 stationList[i].ID = i + 1;
             }
         }
 
-        private void AddItems(RadioStation[] list)
-        {
-            listBox1.Items.Clear();
-            listBox1.Items.AddRange(list);
-        }
-
-        private void SortListBox(ListBox listBox, IComparer<RadioStation> comparer = null)
+        private void SortListBox(ListBox listBox, IComparer<RadioStation> comparer)
         {
             if (listBox != null)
             {
-                RadioStation[] stations = listBox1.Items.OfType<RadioStation>().ToArray();
+                RadioStation[] stations = listBox.Items.OfType<RadioStation>().ToArray();
                 Array.Sort(stations, comparer);
-                AddItems(stations);
+                listBox1.Items.Clear();
+                listBox1.Items.AddRange(stations);
             }
+        }
+
+        private void SortListBox(ListBox listBox, StationSort sort)
+        {
+            switch (sort)
+            {
+                case StationSort.Name:
+                    SortListBox(listBox, RadioStation.SortByName);
+                    break;
+                case StationSort.PlayCount:
+                    SortListBox(listBox, RadioStation.SortByPlayingCount);
+                    break;
+                case StationSort.Default:
+                    SortListBox(listBox, null);
+                    break;
+            }
+
+            listBox1.SelectedItem = currentStation;
         }
 
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (toolStripComboBox1.Text)
-            {
-                case "Name":
-                    SortListBox(listBox1, RadioStation.SortByName);
-                    break;
-                case "PlayCount":
-                    SortListBox(listBox1, RadioStation.SortByPlayingCount);
-                    break;
-                default:
-                    SortListBox(listBox1);
-                    break;
-            }
-            listBox1.SelectedItem = currentStation;
+            Enum.TryParse(toolStripComboBox1.Text, out sort);
+            SortListBox(listBox1, sort);
         }
 
         private void loadStationsFromTextFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -517,9 +524,11 @@ namespace Radio
 
         private void deleteSelectedStationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            stationList.Remove((RadioStation)listBox1.SelectedItem);
-            ReIndexStations(stationList);
-            AddItems(stationList.ToArray());
+            RadioStation item = listBox1.SelectedItem as RadioStation;
+            RemoveStationsFromList(stationList, item);
+            listBox1.Items.Remove(item);
+            SortListBox(listBox1, sort);
+            ShowMessageBox($"Station \'{item.Name}\' removed");
         }
 
         //protected override void WndProc(ref Message m)

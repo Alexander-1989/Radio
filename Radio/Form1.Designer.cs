@@ -46,6 +46,7 @@ namespace Radio
             this.copyStationAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.deleteSelectedStationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,7 +55,6 @@ namespace Radio
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.deleteSelectedStationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -199,14 +199,18 @@ namespace Radio
             // 
             // toolStripComboBox1
             // 
-            this.toolStripComboBox1.Items.AddRange(new object[] {
-            "Default",
-            "Name",
-            "PlayCount"});
             this.toolStripComboBox1.Name = "toolStripComboBox1";
             this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
-            this.toolStripComboBox1.Text = "Default";
+            this.toolStripComboBox1.Items.AddRange(System.Enum.GetNames(typeof(StationSort)));
+            this.toolStripComboBox1.SelectedIndex = 0;
             this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
+            // 
+            // deleteSelectedStationToolStripMenuItem
+            // 
+            this.deleteSelectedStationToolStripMenuItem.Name = "deleteSelectedStationToolStripMenuItem";
+            this.deleteSelectedStationToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.deleteSelectedStationToolStripMenuItem.Text = "Delete selected station";
+            this.deleteSelectedStationToolStripMenuItem.Click += new System.EventHandler(this.deleteSelectedStationToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -267,13 +271,6 @@ namespace Radio
             // saveFileDialog1
             // 
             this.saveFileDialog1.Filter = "XML File|*.xml";
-            // 
-            // deleteSelectedStationToolStripMenuItem
-            // 
-            this.deleteSelectedStationToolStripMenuItem.Name = "deleteSelectedStationToolStripMenuItem";
-            this.deleteSelectedStationToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.deleteSelectedStationToolStripMenuItem.Text = "Delete selected station";
-            this.deleteSelectedStationToolStripMenuItem.Click += new System.EventHandler(this.deleteSelectedStationToolStripMenuItem_Click);
             // 
             // Form1
             // 
