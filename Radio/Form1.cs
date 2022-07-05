@@ -72,6 +72,7 @@ namespace Radio
                 Accent.LightBlue200,
                 TextShade.BLACK
                 );
+            label3.Text = DateTime.Now.ToShortDateString();
         }
 
         private void Form1_DragEnter(object sender, DragEventArgs e)

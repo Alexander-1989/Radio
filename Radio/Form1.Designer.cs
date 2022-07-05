@@ -55,6 +55,7 @@ namespace Radio
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.label3 = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -180,7 +181,7 @@ namespace Radio
             this.sortToolStripMenuItem,
             this.deleteSelectedStationToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 70);
             // 
             // copyStationAddressToolStripMenuItem
             // 
@@ -199,10 +200,13 @@ namespace Radio
             // 
             // toolStripComboBox1
             // 
+            this.toolStripComboBox1.Items.AddRange(new object[] {
+            "Default",
+            "Name",
+            "PlayCount"});
             this.toolStripComboBox1.Name = "toolStripComboBox1";
             this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
-            this.toolStripComboBox1.Items.AddRange(System.Enum.GetNames(typeof(StationSort)));
-            this.toolStripComboBox1.SelectedIndex = 0;
+            this.toolStripComboBox1.Text = "Default";
             this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
             // 
             // deleteSelectedStationToolStripMenuItem
@@ -272,12 +276,22 @@ namespace Radio
             // 
             this.saveFileDialog1.Filter = "XML File|*.xml";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(220, 75);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "label3";
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(305, 438);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.muteBox);
             this.Controls.Add(this.label2);
@@ -333,6 +347,7 @@ namespace Radio
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem deleteSelectedStationToolStripMenuItem;
+        private System.Windows.Forms.Label label3;
     }
 }
 
