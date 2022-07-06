@@ -181,7 +181,7 @@ namespace Radio
             this.sortToolStripMenuItem,
             this.deleteSelectedStationToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 92);
             // 
             // copyStationAddressToolStripMenuItem
             // 
@@ -213,7 +213,7 @@ namespace Radio
             // 
             this.deleteSelectedStationToolStripMenuItem.Name = "deleteSelectedStationToolStripMenuItem";
             this.deleteSelectedStationToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.deleteSelectedStationToolStripMenuItem.Text = "Delete selected station";
+            this.deleteSelectedStationToolStripMenuItem.Text = "Remove selected station";
             this.deleteSelectedStationToolStripMenuItem.Click += new System.EventHandler(this.deleteSelectedStationToolStripMenuItem_Click);
             // 
             // openFileDialog1

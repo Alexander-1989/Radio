@@ -519,11 +519,14 @@ namespace Radio
 
         private void deleteSelectedStationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RadioStation item = listBox1.SelectedItem as RadioStation;
-            RemoveStationsFromList(stationList, item);
-            listBox1.Items.Remove(item);
-            SortListBox(listBox1, sort);
-            ShowMessageBox($"Station \'{item.Name}\' removed");
+            if (MessageBox.Show("Are you sure?", "Remove this station?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                RadioStation item = listBox1.SelectedItem as RadioStation;
+                RemoveStationsFromList(stationList, item);
+                listBox1.Items.Remove(item);
+                SortListBox(listBox1, sort);
+                ShowMessageBox($"Station \'{item.Name}\' removed");
+            }
         }
 
         //protected override void WndProc(ref Message m)
