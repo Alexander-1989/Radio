@@ -21,9 +21,12 @@ namespace Radio.Service
         {
             try
             {
-                using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+                if (File.Exists(fileName))
                 {
-                    return serializer.Deserialize(stream) as List<RadioStation>;
+                    using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+                    {
+                        return serializer.Deserialize(stream) as List<RadioStation>;
+                    }
                 }
             }
             catch (Exception) { }

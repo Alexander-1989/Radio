@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms;
-
-namespace Radio
+﻿namespace Radio
 {
     internal static class Extension
     {
-        internal static bool IsEmpty(this ListBox listBox)
+        internal static bool IsEmpty(this System.Windows.Forms.ListBox listBox)
         {
             return !listBox.Items.GetEnumerator().MoveNext();
         }

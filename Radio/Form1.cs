@@ -97,20 +97,21 @@ namespace Radio
 
         private void ReadStationList(string fileName)
         {
-            listBox1.Items.Clear();
             stationList?.Clear();
+            listBox1.Items.Clear();
             string extension = Path.GetExtension(fileName);
+            string XMLextension = Path.GetExtension(defaultXmlStationFile);
+            string TXTextension = Path.GetExtension(defaultTxtStationFile);
 
-            if (extension == ".txt")
-            {
-                stationList = InitStationList(fileName);
-            }
-            else if (extension == ".xml")
+            if (extension.Equals(XMLextension))
             {
                 stationList = serrializer.ReadFromFile(fileName);
             }
-
-            if (stationList == null)
+            else if (extension.Equals(TXTextension))
+            {
+                stationList = ReadStationsFromTxtFile(fileName);
+            }
+            else if (stationList == null)
             {
                 stationList = new List<RadioStation>();
             }
@@ -121,7 +122,7 @@ namespace Radio
             }
         }
 
-        private List<RadioStation> InitStationList(string fileName)
+        private List<RadioStation> ReadStationsFromTxtFile(string fileName)
         {
             List<RadioStation> stations = new List<RadioStation>();
             if (File.Exists(fileName))
@@ -229,18 +230,18 @@ namespace Radio
 
         private void SearchBoxTextChanged(object sender, EventArgs e)
         {
-            string item = SearchBox.Text;
+            string searchItem = SearchBox.Text;
             listBox1.Items.Clear();
 
             foreach (RadioStation station in stationList)
             {
-                if (Contains(station.Name, item))
+                if (Contains(station.Name, searchItem))
                 {
                     listBox1.Items.Add(station);
                 }
             }
 
-            if (string.IsNullOrEmpty(item))
+            if (string.IsNullOrEmpty(searchItem))
             {
                 label2.Visible = true;
                 listBox1.SelectedItem = currentStation;
@@ -363,16 +364,13 @@ namespace Radio
             Location = new Point(INI.Parse("General", "X"), INI.Parse("General", "Y"));
             VolumeScrollBar.Value = INI.Parse("General", "Volume");
             materialSwitch1.Checked = INI.Read("General", "Theme") == "DARK";
-
             string fileName = File.Exists(defaultXmlStationFile) ? defaultXmlStationFile : defaultTxtStationFile;
             ReadStationList(fileName);
             Enum.TryParse(INI.Read("General", "Sort by"), out sort);
-
             if (toolStripComboBox1.Text != $"{sort}")
             {
                 toolStripComboBox1.Text = $"{sort}";
             }
-
             listBox1.Text = INI.Read("Station", "CurrentStation");
             ShowVolume(100 - VolumeScrollBar.Value);
             PlayStation();
@@ -519,7 +517,8 @@ namespace Radio
 
         private void deleteSelectedStationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure?", "Remove this station?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure?", "Remove this station?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                == DialogResult.Yes)
             {
                 RadioStation item = listBox1.SelectedItem as RadioStation;
                 RemoveStationsFromList(stationList, item);
