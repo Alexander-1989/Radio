@@ -83,8 +83,9 @@ namespace Radio
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
             string fileName = ((string[])e.Data.GetData(DataFormats.FileDrop, false)).GetFirst();
+            string fileExtension = Path.GetExtension(fileName);
             string[] extensions = { ".txt", ".xml" };
-            if (!string.IsNullOrEmpty(fileName) && extensions.Contains(Path.GetExtension(fileName)))
+            if (!string.IsNullOrEmpty(fileName) && extensions.Contains(fileExtension))
             {
                 ReadStationList(fileName);
             }
@@ -224,11 +225,6 @@ namespace Radio
             Text = "Internet Radio";
         }
 
-        private bool Contains(string strA, string strB)
-        {
-            return strA.IndexOf(strB, StringComparison.OrdinalIgnoreCase) > -1;
-        }
-
         private void SearchBoxTextChanged(object sender, EventArgs e)
         {
             string searchItem = SearchBox.Text;
@@ -236,7 +232,7 @@ namespace Radio
 
             foreach (RadioStation station in stationList)
             {
-                if (Contains(station.Name, searchItem))
+                if (station.Name.ContainsWithoutCase(searchItem))
                 {
                     listBox1.Items.Add(station);
                 }

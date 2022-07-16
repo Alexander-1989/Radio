@@ -25,5 +25,10 @@
             }
             return System.Array.IndexOf(array, value) > -1;
         }
+
+        internal static bool ContainsWithoutCase(this string text, string value)
+        {
+            return text.IndexOf(value, System.StringComparison.OrdinalIgnoreCase) > -1;
+        }
     }
 }
