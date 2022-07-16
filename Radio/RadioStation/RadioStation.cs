@@ -44,6 +44,11 @@ namespace Radio
             PlayCount = 0;
         }
 
+        public string GetInfo()
+        {
+            return $"ID: {ID}\nName: {Name}\nURL: {URL}\nPlay Count: {PlayCount}";
+        }
+
         public override string ToString()
         {
             return $"{ID} - {Name}";

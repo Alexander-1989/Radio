@@ -83,7 +83,8 @@ namespace Radio
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
             string fileName = ((string[])e.Data.GetData(DataFormats.FileDrop, false)).GetFirst();
-            if (fileName?.Length > 0)
+            string[] extensions = { ".txt", ".xml" };
+            if (!string.IsNullOrEmpty(fileName) && extensions.Contains(Path.GetExtension(fileName)))
             {
                 ReadStationList(fileName);
             }
@@ -525,6 +526,14 @@ namespace Radio
                 listBox1.Items.Remove(item);
                 SortListBox(listBox1, sort);
                 ShowMessageBox($"Station \'{item.Name}\' removed");
+            }
+        }
+
+        private void getInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem is RadioStation station)
+            {
+                MessageBox.Show(station.GetInfo());
             }
         }
 

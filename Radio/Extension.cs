@@ -16,5 +16,14 @@
         {
             return array.IsNullOrEmpty() ? default : array[0];
         }
+
+        internal static bool Contains<T>(this T[] array, T value)
+        {
+            if (array.IsNullOrEmpty() || value == null)
+            {
+                throw new System.ArgumentException();
+            }
+            return System.Array.IndexOf(array, value) > -1;
+        }
     }
 }

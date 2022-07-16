@@ -56,6 +56,7 @@ namespace Radio
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.label3 = new System.Windows.Forms.Label();
+            this.getInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -179,9 +180,10 @@ namespace Radio
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyStationAddressToolStripMenuItem,
             this.sortToolStripMenuItem,
+            this.getInfoToolStripMenuItem,
             this.deleteSelectedStationToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 114);
             // 
             // copyStationAddressToolStripMenuItem
             // 
@@ -285,6 +287,13 @@ namespace Radio
             this.label3.TabIndex = 14;
             this.label3.Text = "label3";
             // 
+            // getInfoToolStripMenuItem
+            // 
+            this.getInfoToolStripMenuItem.Name = "getInfoToolStripMenuItem";
+            this.getInfoToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.getInfoToolStripMenuItem.Text = "Get Info";
+            this.getInfoToolStripMenuItem.Click += new System.EventHandler(this.getInfoToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -348,6 +357,7 @@ namespace Radio
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem deleteSelectedStationToolStripMenuItem;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolStripMenuItem getInfoToolStripMenuItem;
     }
 }
 
