@@ -18,13 +18,9 @@ namespace Radio
             return result.ToArray();
         }
 
-        internal static bool IsEmpty(this System.Windows.Forms.ListBox listBox)
+        internal static bool IsEmpty(this IEnumerable items)
         {
-            if (listBox == null)
-            {
-                throw new System.ArgumentNullException(nameof(listBox));
-            }
-            return !listBox.Items.GetEnumerator().MoveNext();
+            return !items.GetEnumerator().MoveNext();
         }
 
         internal static bool IsNullOrEmpty<T>(this T[] array)
