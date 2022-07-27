@@ -1,9 +1,29 @@
-﻿namespace Radio
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace Radio
 {
     internal static class Extension
     {
+        internal static T[] OfType<T>(this IEnumerable items)
+        {
+            List<T> result = new List<T>();
+            foreach (object item in items)
+            {
+                if (item is T value)
+                {
+                    result.Add(value);
+                }
+            }
+            return result.ToArray();
+        }
+
         internal static bool IsEmpty(this System.Windows.Forms.ListBox listBox)
         {
+            if (listBox == null)
+            {
+                throw new System.ArgumentNullException(nameof(listBox));
+            }
             return !listBox.Items.GetEnumerator().MoveNext();
         }
 
@@ -21,7 +41,7 @@
         {
             if (array.IsNullOrEmpty() || value == null)
             {
-                throw new System.ArgumentException();
+                throw new System.ArgumentNullException();
             }
             return System.Array.IndexOf(array, value) > -1;
         }

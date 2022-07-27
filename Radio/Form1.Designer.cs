@@ -46,6 +46,7 @@ namespace Radio
             this.copyStationAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.getInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteSelectedStationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -53,10 +54,10 @@ namespace Radio
             this.loadStationsFromTextFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.getScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.label3 = new System.Windows.Forms.Label();
-            this.getInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -183,7 +184,7 @@ namespace Radio
             this.getInfoToolStripMenuItem,
             this.deleteSelectedStationToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 92);
             // 
             // copyStationAddressToolStripMenuItem
             // 
@@ -210,6 +211,13 @@ namespace Radio
             this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
             this.toolStripComboBox1.Text = "Default";
             this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
+            // 
+            // getInfoToolStripMenuItem
+            // 
+            this.getInfoToolStripMenuItem.Name = "getInfoToolStripMenuItem";
+            this.getInfoToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.getInfoToolStripMenuItem.Text = "Get Info";
+            this.getInfoToolStripMenuItem.Click += new System.EventHandler(this.getInfoToolStripMenuItem_Click);
             // 
             // deleteSelectedStationToolStripMenuItem
             // 
@@ -239,6 +247,7 @@ namespace Radio
             this.loadStationsFromTextFileToolStripMenuItem,
             this.playToolStripMenuItem,
             this.stopToolStripMenuItem,
+            this.getScreenToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.menuToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
@@ -267,16 +276,19 @@ namespace Radio
             this.stopToolStripMenuItem.Text = "Export To XML";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
+            // getScreenToolStripMenuItem
+            // 
+            this.getScreenToolStripMenuItem.Name = "getScreenToolStripMenuItem";
+            this.getScreenToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.getScreenToolStripMenuItem.Text = "Get Screen";
+            this.getScreenToolStripMenuItem.Click += new System.EventHandler(this.getScreenToolStripMenuItem_Click);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.Filter = "XML File|*.xml";
             // 
             // label3
             // 
@@ -286,13 +298,6 @@ namespace Radio
             this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 14;
             this.label3.Text = "label3";
-            // 
-            // getInfoToolStripMenuItem
-            // 
-            this.getInfoToolStripMenuItem.Name = "getInfoToolStripMenuItem";
-            this.getInfoToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.getInfoToolStripMenuItem.Text = "Get Info";
-            this.getInfoToolStripMenuItem.Click += new System.EventHandler(this.getInfoToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -358,6 +363,7 @@ namespace Radio
         private System.Windows.Forms.ToolStripMenuItem deleteSelectedStationToolStripMenuItem;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripMenuItem getInfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem getScreenToolStripMenuItem;
     }
 }
 

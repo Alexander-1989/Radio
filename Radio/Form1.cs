@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Microsoft.Win32;
-using System.Linq;
 using Radio.Service;
+using Radio.Utilities;
 
 namespace Radio
 {
@@ -259,6 +259,9 @@ namespace Radio
                 case Keys.P:
                     PlayStation();
                     break;
+                case Keys.G:
+                    GetScreen();
+                    break;
                 case Keys.M:
                     muteBox.Checked = !muteBox.Checked;
                     break;
@@ -443,7 +446,7 @@ namespace Radio
         {
             if (listBox != null)
             {
-                RadioStation[] stations = listBox.Items.OfType<RadioStation>().ToArray();
+                RadioStation[] stations = listBox.Items.OfType<RadioStation>();
                 Array.Sort(stations, comparer);
                 listBox1.Items.Clear();
                 listBox1.Items.AddRange(stations);
@@ -497,6 +500,8 @@ namespace Radio
 
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            saveFileDialog1.Filter = "XML File|*.xml";
+            saveFileDialog1.FileName = string.Empty;
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string fileName = saveFileDialog1.FileName;
@@ -531,6 +536,24 @@ namespace Radio
             {
                 MessageBox.Show(station.GetInfo());
             }
+        }
+
+        private void GetScreen()
+        {
+            saveFileDialog1.Filter = "Image File|*.png";
+            saveFileDialog1.FileName = Utility.GetRandomName(".png");
+            using (Image image = Utility.GetScreen(this))
+            {
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    image.Save(saveFileDialog1.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                }
+            }
+        }
+
+        private void getScreenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GetScreen();
         }
 
         //protected override void WndProc(ref Message m)
