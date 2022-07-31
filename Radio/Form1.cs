@@ -83,11 +83,14 @@ namespace Radio
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
             string fileName = ((string[])e.Data.GetData(DataFormats.FileDrop, false)).GetFirst();
-            string fileExtension = Path.GetExtension(fileName);
-            string[] extensions = { ".txt", ".xml" };
-            if (!string.IsNullOrEmpty(fileName) && extensions.Contains(fileExtension))
+            if (!string.IsNullOrEmpty(fileName))
             {
-                ReadStationList(fileName);
+                string[] extensions = { ".txt", ".xml" };
+                string fileExtension = Path.GetExtension(fileName);
+                if (extensions.Contains(fileExtension))
+                {
+                    ReadStationList(fileName);
+                }
             }
         }
 

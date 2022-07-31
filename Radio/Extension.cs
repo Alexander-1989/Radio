@@ -25,8 +25,8 @@ namespace Radio
 
         internal static T GetFirst<T>(this IEnumerable<T> items)
         {
-            IEnumerator<T> enumerator;
-            return items == null || !(enumerator = items.GetEnumerator()).MoveNext() ? default : enumerator.Current;
+            IEnumerator<T> enumerator = items?.GetEnumerator();
+            return enumerator != null && enumerator.MoveNext() ? enumerator.Current : default;
         }
 
         internal static bool Contains<T>(this T[] array, T value)
