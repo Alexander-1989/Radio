@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Radio
@@ -31,12 +32,12 @@ namespace Radio
 
         internal static bool Contains<T>(this T[] array, T value)
         {
-            return array.IsEmpty() || value == null ? throw new System.ArgumentNullException() : System.Array.IndexOf(array, value) > -1;
+            return array.IsEmpty() || value == null ? throw new ArgumentNullException() : Array.IndexOf(array, value) > -1;
         }
 
         internal static bool ContainsWithoutCase(this string text, string value)
         {
-            return text.IndexOf(value, System.StringComparison.OrdinalIgnoreCase) > -1;
+            return text.IndexOf(value, StringComparison.OrdinalIgnoreCase) > -1;
         }
     }
 }
