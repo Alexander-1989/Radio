@@ -111,7 +111,7 @@ namespace Radio
             }
             else if (extension.Equals(TXTextension))
             {
-                stationList = ReadStationsFromTxtFile(fileName);
+                stationList = Utility.ReadStationsFromTxtFile(fileName);
             }
             else if (stationList == null)
             {
@@ -122,40 +122,6 @@ namespace Radio
             {
                 listBox1.Items.AddRange(stationList.ToArray());
             }
-        }
-
-        private List<RadioStation> ReadStationsFromTxtFile(string fileName)
-        {
-            List<RadioStation> stations = new List<RadioStation>();
-            if (File.Exists(fileName))
-            {
-                try
-                {
-                    using (StreamReader reader = new StreamReader(fileName))
-                    {
-                        int id = 1;
-                        string prefix = "http";
-
-                        while (!reader.EndOfStream)
-                        {
-                            int startIndex = 0;
-                            int endIndex = -1;
-                            string line = reader.ReadLine();
-
-                            if (!string.IsNullOrEmpty(line) && line[0] != '#' && line[0] != ';' && (endIndex = line.IndexOf(prefix)) > -1)
-                            {
-                                string name = line.Substring(startIndex, endIndex - 1).Trim();
-                                startIndex = endIndex;
-                                endIndex = line.IndexOf(' ', startIndex);
-                                string url = endIndex < startIndex ? line.Substring(startIndex) : line.Substring(startIndex, endIndex - startIndex);
-                                stations.Add(new RadioStation(name, url, id++));
-                            }
-                        }
-                    }
-                }
-                catch (Exception) { }
-            }
-            return stations;
         }
 
         private void ShowVolume(int volume)
@@ -501,7 +467,7 @@ namespace Radio
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Filter = "XML File|*.xml";
-            saveFileDialog1.FileName = string.Empty;
+            saveFileDialog1.FileName = "Stations.xml";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string fileName = saveFileDialog1.FileName;

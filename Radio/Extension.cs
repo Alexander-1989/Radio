@@ -23,23 +23,15 @@ namespace Radio
             return !items.GetEnumerator().MoveNext();
         }
 
-        internal static bool IsNullOrEmpty<T>(this T[] array)
+        internal static T GetFirst<T>(this IEnumerable<T> items)
         {
-            return array == null || array.Length == 0;
-        }
-
-        internal static T GetFirst<T>(this T[] array)
-        {
-            return array.IsNullOrEmpty() ? default : array[0];
+            IEnumerator<T> enumerator;
+            return items == null || !(enumerator = items.GetEnumerator()).MoveNext() ? default : enumerator.Current;
         }
 
         internal static bool Contains<T>(this T[] array, T value)
         {
-            if (array.IsNullOrEmpty() || value == null)
-            {
-                throw new System.ArgumentNullException();
-            }
-            return System.Array.IndexOf(array, value) > -1;
+            return array.IsEmpty() || value == null ? throw new System.ArgumentNullException() : System.Array.IndexOf(array, value) > -1;
         }
 
         internal static bool ContainsWithoutCase(this string text, string value)

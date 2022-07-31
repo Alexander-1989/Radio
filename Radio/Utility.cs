@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace Radio.Utilities
 {
@@ -16,6 +18,43 @@ namespace Radio.Utilities
                 graphics.CopyFromScreen(form.Location, new Point(0, 0), image.Size);
             }
             return image;
+        }
+
+        public static List<RadioStation> ReadStationsFromTxtFile(string fileName)
+        {
+            List<RadioStation> stations = new List<RadioStation>();
+            if (File.Exists(fileName))
+            {
+                try
+                {
+                    using (StreamReader reader = new StreamReader(fileName))
+                    {
+                        int id = 1;
+                        string prefix = "http";
+
+                        while (!reader.EndOfStream)
+                        {
+                            int startIndex = 0;
+                            int endIndex = -1;
+                            string line = reader.ReadLine();
+
+                            if (!string.IsNullOrEmpty(line) &&
+                                line[0] != '#' &&
+                                line[0] != ';' &&
+                                (endIndex = line.IndexOf(prefix)) > -1)
+                            {
+                                string name = line.Substring(startIndex, endIndex - 1).Trim();
+                                startIndex = endIndex;
+                                endIndex = line.IndexOf(' ', startIndex);
+                                string url = endIndex < startIndex ? line.Substring(startIndex) : line.Substring(startIndex, endIndex - startIndex);
+                                stations.Add(new RadioStation(name, url, id++));
+                            }
+                        }
+                    }
+                }
+                catch (Exception) { }
+            }
+            return stations;
         }
 
         public static string GetRandomName()
