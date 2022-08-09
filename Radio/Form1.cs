@@ -336,10 +336,7 @@ namespace Radio
             string fileName = File.Exists(defaultXmlStationFile) ? defaultXmlStationFile : defaultTxtStationFile;
             ReadStationList(fileName);
             Enum.TryParse(INI.Read("General", "Sort by"), out sort);
-            if (toolStripComboBox1.Text != $"{sort}")
-            {
-                toolStripComboBox1.Text = $"{sort}";
-            }
+            toolStripComboBox1.Text = $"{sort}";
             listBox1.Text = INI.Read("Station", "CurrentStation");
             ShowVolume(100 - VolumeScrollBar.Value);
             PlayStation();
