@@ -332,11 +332,11 @@ namespace Radio
         {
             Location = new Point(INI.Parse("General", "X"), INI.Parse("General", "Y"));
             VolumeScrollBar.Value = INI.Parse("General", "Volume");
-            materialSwitch1.Checked = INI.Read("General", "Theme") == "DARK";
+            materialSwitch1.Checked = INI.Read("General", "Theme").Equals("DARK");
             string fileName = File.Exists(defaultXmlStationFile) ? defaultXmlStationFile : defaultTxtStationFile;
             ReadStationList(fileName);
             Enum.TryParse(INI.Read("General", "Sort by"), out sort);
-            toolStripComboBox1.Text = $"{sort}";
+            toolStripComboBox1.Text = sort.ToString();
             listBox1.Text = INI.Read("Station", "CurrentStation");
             ShowVolume(100 - VolumeScrollBar.Value);
             PlayStation();
@@ -423,14 +423,14 @@ namespace Radio
         {
             switch (sort)
             {
+                case StationSort.Default:
+                    SortListBox(listBox, null);
+                    break;
                 case StationSort.Name:
                     SortListBox(listBox, RadioStation.SortByName);
                     break;
                 case StationSort.PlayCount:
                     SortListBox(listBox, RadioStation.SortByPlayingCount);
-                    break;
-                case StationSort.Default:
-                    SortListBox(listBox, null);
                     break;
             }
 
