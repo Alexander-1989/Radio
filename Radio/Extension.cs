@@ -19,9 +19,9 @@ namespace Radio
             return result.ToArray();
         }
 
-        internal static bool IsEmpty(this IEnumerable items)
+        internal static bool IsNullOrEmpty(this IEnumerable items)
         {
-            return !items.GetEnumerator().MoveNext();
+            return items == null || !items.GetEnumerator().MoveNext();
         }
 
         internal static T GetFirst<T>(this IEnumerable<T> items)
@@ -32,7 +32,7 @@ namespace Radio
 
         internal static bool Contains<T>(this T[] array, T value)
         {
-            return array.IsEmpty() || value == null ? throw new ArgumentNullException() : Array.IndexOf(array, value) > -1;
+            return array.IsNullOrEmpty() || value == null ? throw new ArgumentNullException() : Array.IndexOf(array, value) > -1;
         }
 
         internal static bool ContainsWithoutCase(this string text, string value)

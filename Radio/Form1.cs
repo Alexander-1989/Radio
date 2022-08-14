@@ -271,7 +271,7 @@ namespace Radio
 
         private void ListBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right && !listBox1.Items.IsEmpty())
+            if (e.Button == MouseButtons.Right && !listBox1.Items.IsNullOrEmpty())
             {
                 contextMenuStrip1.Show(MousePosition);
             }
@@ -291,7 +291,7 @@ namespace Radio
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (!listBox1.Items.IsEmpty())
+            if (!listBox1.Items.IsNullOrEmpty())
             {
                 if (listBox1.SelectedIndex < listBox1.Items.Count - 1)
                 {
@@ -308,7 +308,7 @@ namespace Radio
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (!listBox1.Items.IsEmpty())
+            if (!listBox1.Items.IsNullOrEmpty())
             {
                 if (listBox1.SelectedIndex > 0)
                 {
@@ -351,7 +351,7 @@ namespace Radio
             INI.Write("General", "Theme", themeManager.Theme);
             INI.Write("General", "Sort by", sort);
             INI.Write("Station", "CurrentStation", $"{currentStation}");
-            if (!listBox1.Items.IsEmpty())
+            if (!listBox1.Items.IsNullOrEmpty())
             {
                 serrializer.WriteToFile(defaultXmlStationFile, stationList);
             }
