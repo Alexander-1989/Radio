@@ -22,7 +22,6 @@ namespace Radio
         private MediaPlayerState playerState;
         private RadioStation currentStation;
         private StationSort sort;
-        private string lastText;
         private int lastVolume;
         private int Volume
         {
@@ -48,7 +47,9 @@ namespace Radio
         public Form1()
         {
             InitializeComponent();
+            Resize += Form1_Resize;
             SystemEvents.SessionSwitch += (s, e) => RefreshRadio();
+            pictureBox1.Image = imageList1.Images[0];
             DragEnter += Form1_DragEnter;
             DragDrop += Form1_DragDrop;
             listBox1.MouseDown += ListBox1_MouseDown;
@@ -57,6 +58,8 @@ namespace Radio
             VolumeScrollBar.ValueChanged += VolumeScrollBar_ValueChanged;
             SearchBox.TextChanged += SearchBoxTextChanged;
             SearchBox.KeyDown += TextBox1_KeyDown;
+            notifyIcon1.MouseDown += NotifyIcon1_MouseDown;
+            notifyIcon1.Icon = Properties.Resources.RadioIco;
             button1.KeyDown += Buttons_KeyDown;
             button2.KeyDown += Buttons_KeyDown;
             button3.KeyDown += Buttons_KeyDown;
@@ -73,6 +76,40 @@ namespace Radio
                 TextShade.BLACK
                 );
             label3.Text = DateTime.Now.ToShortDateString();
+        }
+
+        private void ShowRadio()
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+            notifyIcon1.Visible = false;
+        }
+
+        private void HideRadio()
+        {
+            Hide();
+            notifyIcon1.Visible = true;
+            notifyIcon1.Text = Text;
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                HideRadio();
+            }
+        }
+
+        private void NotifyIcon1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ShowRadio();
+            }
+            else
+            {
+                contextMenuStrip2.Show(MousePosition);
+            }
         }
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
@@ -150,16 +187,10 @@ namespace Radio
                 lastVolume = VolumeScrollBar.Value;
                 VolumeScrollBar.Value = 100;
                 label1.Text = "Mute";
-
-                if (currentStation != null)
-                {
-                    Text = currentStation.Name + " (Mute)         ";
-                }
             }
             else
             {
                 VolumeScrollBar.Value = lastVolume;
-                Text = lastText;
             }
         }
 
@@ -170,16 +201,15 @@ namespace Radio
             {
                 if (currentStation.Name.Length > maxLengthString)
                 {
-                    lastText = currentStation.Name + "         ";
+                    Text = currentStation.Name + "         ";
                     timer1.Enabled = true;
                 }
                 else
                 {
-                    lastText = currentStation.Name;
+                    Text = currentStation.Name;
                     timer1.Enabled = false;
                 }
 
-                Text = lastText;
                 currentStation.PlayCount++;
                 mediaPlayer.Open(currentStation.URL);
                 playerState = MediaPlayerState.Playing;
@@ -216,6 +246,8 @@ namespace Radio
             {
                 label2.Visible = false;
             }
+
+            pictureBox1.Visible = listBox1.Items.Count == 0;
 
             SortListBox(listBox1, sort);
         }
@@ -271,7 +303,7 @@ namespace Radio
 
         private void ListBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right && !listBox1.Items.IsNullOrEmpty())
+            if (e.Button == MouseButtons.Right)
             {
                 contextMenuStrip1.Show(MousePosition);
             }
@@ -351,10 +383,7 @@ namespace Radio
             INI.Write("General", "Theme", themeManager.Theme);
             INI.Write("General", "Sort by", sort);
             INI.Write("Station", "CurrentStation", $"{currentStation}");
-            if (!listBox1.Items.IsNullOrEmpty())
-            {
-                serrializer.WriteToFile(defaultXmlStationFile, stationList);
-            }
+            serrializer.WriteToFile(defaultXmlStationFile, stationList);
         }
 
         private void materialSwitch1_CheckedChanged(object sender, EventArgs e)
@@ -399,13 +428,24 @@ namespace Radio
             }
         }
 
-        private void RemoveStationsFromList(List<RadioStation> stationList, RadioStation item)
+        private void ReindexStationList(List<RadioStation> stationList)
         {
-            stationList.Remove(item);
             for (int i = 0; i < stationList.Count; i++)
             {
                 stationList[i].ID = i + 1;
             }
+        }
+
+        private void RemoveStationsFromList(List<RadioStation> stationList, RadioStation item)
+        {
+            stationList.Remove(item);
+            ReindexStationList(stationList);
+        }
+
+        private void AddStationsToList(List<RadioStation> stationList, RadioStation item, int index)
+        {
+            stationList.Insert(index, item);
+            ReindexStationList(stationList);
         }
 
         private void SortListBox(ListBox listBox, IComparer<RadioStation> comparer)
@@ -452,19 +492,23 @@ namespace Radio
             }
         }
 
-        private void playToolStripMenuItem_Click(object sender, EventArgs e)
+        private void importFromXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "XML File|*.xml";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string sourceFile = openFileDialog1.FileName;
-                string destFile = Path.Combine(Environment.CurrentDirectory, "Stations.xml");
-                File.Copy(sourceFile, destFile, true);
                 ReadStationList(sourceFile);
+                try
+                {
+                    string destFile = Path.Combine(Environment.CurrentDirectory, "Stations.xml");
+                    File.Copy(sourceFile, destFile, true);
+                }
+                catch (Exception) { } 
             }
         }
 
-        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exportToXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Filter = "XML File|*.xml";
             saveFileDialog1.FileName = "Stations.xml";
@@ -489,10 +533,13 @@ namespace Radio
                 == DialogResult.Yes)
             {
                 RadioStation item = listBox1.SelectedItem as RadioStation;
-                RemoveStationsFromList(stationList, item);
-                listBox1.Items.Remove(item);
-                SortListBox(listBox1, sort);
-                ShowMessageBox($"Station \'{item.Name}\' removed");
+                if (item != null)
+                {
+                    RemoveStationsFromList(stationList, item);
+                    listBox1.Items.Remove(item);
+                    SortListBox(listBox1, sort);
+                    ShowMessageBox($"Station \'{item.Name}\' removed");
+                }
             }
         }
 
@@ -500,7 +547,7 @@ namespace Radio
         {
             if (listBox1.SelectedItem is RadioStation station)
             {
-                MessageBox.Show(station.GetInfo());
+                MessageBox.Show(station.GetInfo);
             }
         }
 
@@ -520,6 +567,49 @@ namespace Radio
         private void getScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GetScreen();
+        }
+
+        private void addNewStationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (StationEditor stationCreator = new StationEditor())
+            {
+                stationCreator.ShowDialog(this);
+                RadioStation station = stationCreator.CreateNewStation();
+                if (station != null)
+                {
+                    int index = listBox1.SelectedIndex + 1;
+                    AddStationsToList(stationList, station, index);
+                    listBox1.Items.Insert(index, station);
+                    SortListBox(listBox1, sort);
+                    ShowMessageBox($"Station \'{station.Name}\' was added");
+                }
+                else
+                {
+                    ShowMessageBox("The station was not created and added");
+                }
+            }
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RadioStation station = listBox1.SelectedItem as RadioStation;
+            using (StationEditor stationCreator = new StationEditor(station))
+            {
+                stationCreator.ShowDialog(this);
+            }
+            SortListBox(listBox1, sort);
+            ShowMessageBox($"Radio station \'{station.Name}\' edited");
+        }
+
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ShowRadio();
+            Application.Exit();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowRadio();
         }
 
         //protected override void WndProc(ref Message m)

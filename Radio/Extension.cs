@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Forms;
+using Radio.Utilities;
 
 namespace Radio
 {
@@ -38,6 +40,11 @@ namespace Radio
         internal static bool ContainsWithoutCase(this string text, string value)
         {
             return text.IndexOf(value, StringComparison.OrdinalIgnoreCase) > -1;
+        }
+
+        internal static Utility.Validator GetValidator(this Control control)
+        {
+            return new Utility.Validator(control);
         }
     }
 }

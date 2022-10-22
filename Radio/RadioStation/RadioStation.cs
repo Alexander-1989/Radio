@@ -36,6 +36,8 @@ namespace Radio
 
         public RadioStation() : this("", "", 0) { }
 
+        public RadioStation(string name, string url) : this(name, url, 0) { }
+
         public RadioStation(string name, string url, int id)
         {
             Name = name;
@@ -44,9 +46,12 @@ namespace Radio
             PlayCount = 0;
         }
 
-        public string GetInfo()
+        public string GetInfo
         {
-            return $"ID: {ID}\nName: {Name}\nURL: {URL}\nPlay Count: {PlayCount}";
+            get
+            {
+                return $"ID: {ID}\nName: {Name}\nURL: {URL}\nPlay Count: {PlayCount}";
+            }
         }
 
         public override string ToString()
