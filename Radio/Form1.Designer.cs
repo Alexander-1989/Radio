@@ -54,9 +54,8 @@ namespace Radio
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadStationsFromTextFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importFromXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importStationsFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportStationsToXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -197,7 +196,7 @@ namespace Radio
             this.addNewStationToolStripMenuItem,
             this.removeSelectedStationToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 158);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 136);
             // 
             // copyStationAddressToolStripMenuItem
             // 
@@ -264,16 +263,15 @@ namespace Radio
             this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(3, 64);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(50, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(170, 33);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // menuToolStripMenuItem
             // 
             this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadStationsFromTextFileToolStripMenuItem,
-            this.importFromXMLToolStripMenuItem,
-            this.exportToXMLToolStripMenuItem,
+            this.importStationsFromFileToolStripMenuItem,
+            this.exportStationsToXMLToolStripMenuItem,
             this.getScreenToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.menuToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
@@ -282,38 +280,31 @@ namespace Radio
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(42, 29);
             this.menuToolStripMenuItem.Text = "Menu";
             // 
-            // loadStationsFromTextFileToolStripMenuItem
+            // importStationsFromFileToolStripMenuItem
             // 
-            this.loadStationsFromTextFileToolStripMenuItem.Name = "loadStationsFromTextFileToolStripMenuItem";
-            this.loadStationsFromTextFileToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.loadStationsFromTextFileToolStripMenuItem.Text = "Load Stations From Text File";
-            this.loadStationsFromTextFileToolStripMenuItem.Click += new System.EventHandler(this.loadStationsFromTextFileToolStripMenuItem_Click);
+            this.importStationsFromFileToolStripMenuItem.Name = "importStationsFromFileToolStripMenuItem";
+            this.importStationsFromFileToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.importStationsFromFileToolStripMenuItem.Text = "Import Stations From File";
+            this.importStationsFromFileToolStripMenuItem.Click += new System.EventHandler(this.importStationsFromFileToolStripMenuItem_Click);
             // 
-            // importFromXMLToolStripMenuItem
+            // exportStationsToXMLToolStripMenuItem
             // 
-            this.importFromXMLToolStripMenuItem.Name = "importFromXMLToolStripMenuItem";
-            this.importFromXMLToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.importFromXMLToolStripMenuItem.Text = "Import From XML";
-            this.importFromXMLToolStripMenuItem.Click += new System.EventHandler(this.importFromXMLToolStripMenuItem_Click);
-            // 
-            // exportToXMLToolStripMenuItem
-            // 
-            this.exportToXMLToolStripMenuItem.Name = "exportToXMLToolStripMenuItem";
-            this.exportToXMLToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.exportToXMLToolStripMenuItem.Text = "Export To XML";
-            this.exportToXMLToolStripMenuItem.Click += new System.EventHandler(this.exportToXMLToolStripMenuItem_Click);
+            this.exportStationsToXMLToolStripMenuItem.Name = "exportStationsToXMLToolStripMenuItem";
+            this.exportStationsToXMLToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.exportStationsToXMLToolStripMenuItem.Text = "Export Stations To XML";
+            this.exportStationsToXMLToolStripMenuItem.Click += new System.EventHandler(this.exportStationsToXMLToolStripMenuItem_Click);
             // 
             // getScreenToolStripMenuItem
             // 
             this.getScreenToolStripMenuItem.Name = "getScreenToolStripMenuItem";
-            this.getScreenToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.getScreenToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.getScreenToolStripMenuItem.Text = "Get Screen";
             this.getScreenToolStripMenuItem.Click += new System.EventHandler(this.getScreenToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -428,9 +419,8 @@ namespace Radio
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadStationsFromTextFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importFromXMLToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportToXMLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importStationsFromFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportStationsToXMLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem removeSelectedStationToolStripMenuItem;

@@ -484,25 +484,16 @@ namespace Radio
             SortListBox(listBox1, sort);
         }
 
-        private void loadStationsFromTextFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void importStationsFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = "Text File|*.txt";
+            openFileDialog1.Filter = "XML File|*.xml|Text File|*.txt";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 ReadStationList(openFileDialog1.FileName);
             }
         }
 
-        private void importFromXMLToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            openFileDialog1.Filter = "XML File|*.xml";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                ReadStationList(openFileDialog1.FileName);
-            }
-        }
-
-        private void exportToXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exportStationsToXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Filter = "XML File|*.xml";
             saveFileDialog1.FileName = "Stations.xml";
