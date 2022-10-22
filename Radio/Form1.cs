@@ -436,16 +436,18 @@ namespace Radio
             }
         }
 
-        private void RemoveStationsFromList(List<RadioStation> stationList, RadioStation item)
-        {
-            stationList.Remove(item);
-            ReindexStationList(stationList);
-        }
-
-        private void AddStationsToList(List<RadioStation> stationList, RadioStation item, int index)
+        private void AddStation(List<RadioStation> stationList, ListBox listBox, int index, RadioStation item)
         {
             stationList.Insert(index, item);
             ReindexStationList(stationList);
+            listBox.Items.Insert(index, item);
+        }
+
+        private void RemoveStation(List<RadioStation> stationList, ListBox listBox, RadioStation item)
+        {
+            stationList.Remove(item);
+            ReindexStationList(stationList);
+            listBox.Items.Remove(item);
         }
 
         private void SortListBox(ListBox listBox, IComparer<RadioStation> comparer)
@@ -456,6 +458,7 @@ namespace Radio
                 Array.Sort(stations, comparer);
                 listBox1.Items.Clear();
                 listBox1.Items.AddRange(stations);
+                listBox1.SelectedItem = currentStation;
             }
         }
 
@@ -473,8 +476,6 @@ namespace Radio
                     SortListBox(listBox, RadioStation.SortByPlayingCount);
                     break;
             }
-
-            listBox1.SelectedItem = currentStation;
         }
 
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -497,14 +498,7 @@ namespace Radio
             openFileDialog1.Filter = "XML File|*.xml";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                string sourceFile = openFileDialog1.FileName;
-                ReadStationList(sourceFile);
-                try
-                {
-                    string destFile = Path.Combine(Environment.CurrentDirectory, "Stations.xml");
-                    File.Copy(sourceFile, destFile, true);
-                }
-                catch (Exception) { } 
+                ReadStationList(openFileDialog1.FileName);
             }
         }
 
@@ -525,22 +519,6 @@ namespace Radio
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-
-        private void deleteSelectedStationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Are you sure?", "Remove this station?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                == DialogResult.Yes)
-            {
-                RadioStation item = listBox1.SelectedItem as RadioStation;
-                if (item != null)
-                {
-                    RemoveStationsFromList(stationList, item);
-                    listBox1.Items.Remove(item);
-                    SortListBox(listBox1, sort);
-                    ShowMessageBox($"Station \'{item.Name}\' removed");
-                }
-            }
         }
 
         private void getInfoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -578,14 +556,27 @@ namespace Radio
                 if (station != null)
                 {
                     int index = listBox1.SelectedIndex + 1;
-                    AddStationsToList(stationList, station, index);
-                    listBox1.Items.Insert(index, station);
+                    AddStation(stationList, listBox1, index, station);
                     SortListBox(listBox1, sort);
                     ShowMessageBox($"Station \'{station.Name}\' was added");
                 }
                 else
                 {
                     ShowMessageBox("The station was not created and added");
+                }
+            }
+        }
+
+        private void removeSelectedStationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure?", "Remove this station?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                == DialogResult.Yes)
+            {
+                if (listBox1.SelectedItem is RadioStation item)
+                {
+                    RemoveStation(stationList, listBox1, item);
+                    SortListBox(listBox1, sort);
+                    ShowMessageBox($"Station \'{item.Name}\' removed");
                 }
             }
         }

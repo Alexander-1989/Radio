@@ -50,7 +50,7 @@ namespace Radio
             this.getInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewStationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteSelectedStationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeSelectedStationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -195,9 +195,9 @@ namespace Radio
             this.getInfoToolStripMenuItem,
             this.renameToolStripMenuItem,
             this.addNewStationToolStripMenuItem,
-            this.deleteSelectedStationToolStripMenuItem});
+            this.removeSelectedStationToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 136);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 158);
             // 
             // copyStationAddressToolStripMenuItem
             // 
@@ -246,12 +246,12 @@ namespace Radio
             this.addNewStationToolStripMenuItem.Text = "Add New Station";
             this.addNewStationToolStripMenuItem.Click += new System.EventHandler(this.addNewStationToolStripMenuItem_Click);
             // 
-            // deleteSelectedStationToolStripMenuItem
+            // removeSelectedStationToolStripMenuItem
             // 
-            this.deleteSelectedStationToolStripMenuItem.Name = "deleteSelectedStationToolStripMenuItem";
-            this.deleteSelectedStationToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.deleteSelectedStationToolStripMenuItem.Text = "Remove selected station";
-            this.deleteSelectedStationToolStripMenuItem.Click += new System.EventHandler(this.deleteSelectedStationToolStripMenuItem_Click);
+            this.removeSelectedStationToolStripMenuItem.Name = "removeSelectedStationToolStripMenuItem";
+            this.removeSelectedStationToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.removeSelectedStationToolStripMenuItem.Text = "Remove selected station";
+            this.removeSelectedStationToolStripMenuItem.Click += new System.EventHandler(this.removeSelectedStationToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -352,19 +352,19 @@ namespace Radio
             this.openToolStripMenuItem,
             this.exitToolStripMenuItem1});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(181, 70);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(104, 48);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
@@ -433,7 +433,7 @@ namespace Radio
         private System.Windows.Forms.ToolStripMenuItem exportToXMLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.ToolStripMenuItem deleteSelectedStationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeSelectedStationToolStripMenuItem;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripMenuItem getInfoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getScreenToolStripMenuItem;
