@@ -581,13 +581,15 @@ namespace Radio
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RadioStation station = listBox1.SelectedItem as RadioStation;
-            using (StationEditor stationCreator = new StationEditor(station))
+            if (listBox1.SelectedItem is RadioStation item)
             {
-                stationCreator.ShowDialog(this);
+                using (StationEditor stationCreator = new StationEditor(item))
+                {
+                    stationCreator.ShowDialog(this);
+                }
+                SortListBox(listBox1, sort);
+                ShowMessageBox($"Radio station \'{item.Name}\' edited");
             }
-            SortListBox(listBox1, sort);
-            ShowMessageBox($"Radio station \'{station.Name}\' edited");
         }
 
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
