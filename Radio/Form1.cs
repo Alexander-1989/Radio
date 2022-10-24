@@ -22,6 +22,7 @@ namespace Radio
         private MediaPlayerState playerState;
         private RadioStation currentStation;
         private StationSort sort;
+        private bool isMinimize = false;
         private int lastVolume;
         private int Volume
         {
@@ -80,16 +81,20 @@ namespace Radio
 
         private void ShowRadio()
         {
-            Show();
             WindowState = FormWindowState.Normal;
-            notifyIcon1.Visible = false;
+            ShowInTaskbar = true;
         }
 
         private void HideRadio()
         {
-            Hide();
-            notifyIcon1.Visible = true;
+            ShowInTaskbar = false;
             notifyIcon1.Text = Text;
+        }
+
+        private void CloseRadio()
+        {
+            isMinimize = false;
+            Close();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -368,6 +373,7 @@ namespace Radio
             string fileName = File.Exists(defaultXmlStationFile) ? defaultXmlStationFile : defaultTxtStationFile;
             ReadStationList(fileName);
             Enum.TryParse(INI.Read("General", "Sort by"), out sort);
+            minimizeToolStripMenuItem.Checked = isMinimize = INI.Parse<bool>("General", "MinimizeOnClose");
             toolStripComboBox1.Text = sort.ToString();
             listBox1.Text = INI.Read("Station", "CurrentStation");
             ShowVolume(100 - VolumeScrollBar.Value);
@@ -382,6 +388,7 @@ namespace Radio
             INI.Write("General", "Volume", volume);
             INI.Write("General", "Theme", themeManager.Theme);
             INI.Write("General", "Sort by", sort);
+            INI.Write("General", "MinimizeOnClose", minimizeToolStripMenuItem.Checked);
             INI.Write("Station", "CurrentStation", $"{currentStation}");
             serrializer.WriteToFile(defaultXmlStationFile, stationList);
         }
@@ -509,7 +516,7 @@ namespace Radio
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            CloseRadio();
         }
 
         private void getInfoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -586,12 +593,26 @@ namespace Radio
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ShowRadio();
-            Application.Exit();
+            CloseRadio();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowRadio();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isMinimize)
+            {
+                e.Cancel = true;
+                WindowState = FormWindowState.Minimized;
+            }
+        }
+
+        private void minimizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            minimizeToolStripMenuItem.Checked = isMinimize = !minimizeToolStripMenuItem.Checked;
         }
 
         //protected override void WndProc(ref Message m)

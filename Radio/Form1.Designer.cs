@@ -57,6 +57,7 @@ namespace Radio
             this.importStationsFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportStationsToXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.minimizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.label3 = new System.Windows.Forms.Label();
@@ -263,7 +264,7 @@ namespace Radio
             this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(3, 64);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(170, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(50, 33);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -273,6 +274,7 @@ namespace Radio
             this.importStationsFromFileToolStripMenuItem,
             this.exportStationsToXMLToolStripMenuItem,
             this.getScreenToolStripMenuItem,
+            this.minimizeToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.menuToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
@@ -300,6 +302,13 @@ namespace Radio
             this.getScreenToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.getScreenToolStripMenuItem.Text = "Get Screen";
             this.getScreenToolStripMenuItem.Click += new System.EventHandler(this.getScreenToolStripMenuItem_Click);
+            // 
+            // minimizeToolStripMenuItem
+            // 
+            this.minimizeToolStripMenuItem.Name = "minimizeToolStripMenuItem";
+            this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.minimizeToolStripMenuItem.Text = "Minimize on close";
+            this.minimizeToolStripMenuItem.Click += new System.EventHandler(this.minimizeToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -336,6 +345,7 @@ namespace Radio
             // notifyIcon1
             // 
             this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
             // 
             // contextMenuStrip2
             // 
@@ -382,10 +392,10 @@ namespace Radio
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.ShowInTaskbar = false;
             this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Internet Radio";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.contextMenuStrip1.ResumeLayout(false);
@@ -435,6 +445,7 @@ namespace Radio
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem minimizeToolStripMenuItem;
     }
 }
 
