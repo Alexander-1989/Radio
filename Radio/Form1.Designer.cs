@@ -344,7 +344,7 @@ namespace Radio
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Text = "Internet Radio";
             this.notifyIcon1.Visible = true;
             // 
             // contextMenuStrip2

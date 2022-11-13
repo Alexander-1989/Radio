@@ -22,7 +22,7 @@ namespace Radio
         private MediaPlayerState playerState;
         private RadioStation currentStation;
         private StationSort sort;
-        private bool isMinimize = false;
+        private bool isMinimize;
         private int lastVolume;
         private int Volume
         {

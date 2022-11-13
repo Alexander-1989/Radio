@@ -5,40 +5,59 @@ namespace System.IO
 {
     class INIFile
     {
-        readonly string FileName = null;
+        private readonly string _FileName = null;
+        private const string _name = "Config.ini";
 
         public INIFile()
         {
-            FileName = Path.Combine(Environment.CurrentDirectory, "Config.ini");
+            _FileName = Path.Combine(Environment.CurrentDirectory, _name);
         }
 
-        public INIFile(string FileName)
+        public INIFile(string fileName)
         {
-            this.FileName = Path.GetFullPath(FileName);
+            _FileName = Path.GetFullPath(fileName);
         }
 
         public bool FileExists
         {
             get
 			{
-				return File.Exists(FileName);
+				return File.Exists(_FileName);
 			}
         }
 
         public void Write<T>(string Section, string Key, T Value) where T : IConvertible
         {
-            if (Section == null) throw new ArgumentNullException("Section");
-            if (Key == null) throw new ArgumentNullException("Key");
-            if (Value == null) throw new ArgumentNullException("Value");
-            SafeNativeMethods.WritePrivateProfileString(Section, Key, Value.ToString(), FileName);
+            if (Section == null)
+            {
+                throw new ArgumentNullException("Section");
+            }
+
+            if (Key == null)
+            {
+                throw new ArgumentNullException("Key");
+            }
+
+            if (Value == null)
+            {
+                throw new ArgumentNullException("Value");
+            }
+
+            SafeNativeMethods.WritePrivateProfileString(Section, Key, Value.ToString(), _FileName);
         }
 
         public string Read(string Section, string Key)
         {
-            if (Section == null) throw new ArgumentNullException("Section");
-            if (Key == null) throw new ArgumentNullException("Key");
+            if (Section == null)
+            {
+                throw new ArgumentNullException("Section");
+            }
+            if (Key == null)
+            {
+                throw new ArgumentNullException("Key");
+            }
             StringBuilder result = new StringBuilder(255);
-            SafeNativeMethods.GetPrivateProfileString(Section, Key, null, result, result.Capacity, FileName);
+            SafeNativeMethods.GetPrivateProfileString(Section, Key, null, result, result.Capacity, _FileName);
             return result.ToString();
         }
 
@@ -52,8 +71,14 @@ namespace System.IO
         {
             try
             {
-                if (typeof(T).IsEnum) return (T)Enum.Parse(typeof(T), Read(Section, Key), true);
-                else return (T)Convert.ChangeType(Read(Section, Key), typeof(T));
+                if (typeof(T).IsEnum)
+                {
+                    return (T)Enum.Parse(typeof(T), Read(Section, Key), true);
+                }
+                else
+                {
+                    return (T)Convert.ChangeType(Read(Section, Key), typeof(T));
+                }
             }
             catch (Exception)
             {
@@ -64,38 +89,38 @@ namespace System.IO
         public string[] GetSections()
         {
             char[] result = new char[255];
-            SafeNativeMethods.GetPrivateProfileString(null, null, null, result, result.Length, FileName);
+            SafeNativeMethods.GetPrivateProfileString(null, null, null, result, result.Length, _FileName);
             return new string(result).Split(new char[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public void DeleteSection(string Section)
         {
-            SafeNativeMethods.WritePrivateProfileString(Section, null, null, FileName);
+            SafeNativeMethods.WritePrivateProfileString(Section, null, null, _FileName);
         }
 
         public bool SectionExists(string Section)
         {
             char[] res = new char[255];
-            SafeNativeMethods.GetPrivateProfileString(null, null, null, res, res.Length, FileName);
+            SafeNativeMethods.GetPrivateProfileString(null, null, null, res, res.Length, _FileName);
             return new string(res).Contains(Section);
         }
 
         public string[] GetKeys(string Section)
         {
             char[] result = new char[255];
-            SafeNativeMethods.GetPrivateProfileString(Section, null, null, result, result.Length, FileName);
+            SafeNativeMethods.GetPrivateProfileString(Section, null, null, result, result.Length, _FileName);
             return new string(result).Split(new char[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public void DeleteKey(string Section, string Key)
         {
-            SafeNativeMethods.WritePrivateProfileString(Section, Key, null, FileName);
+            SafeNativeMethods.WritePrivateProfileString(Section, Key, null, _FileName);
         }
 
         public bool KeyExists(string Section, string Key)
         {
             char[] res = new char[255];
-            SafeNativeMethods.GetPrivateProfileString(Section, null, null, res, res.Length, FileName);
+            SafeNativeMethods.GetPrivateProfileString(Section, null, null, res, res.Length, _FileName);
             return new string(res).Contains(Key);
         }
 
