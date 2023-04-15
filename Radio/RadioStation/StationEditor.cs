@@ -56,10 +56,5 @@ namespace Radio
                 _currentStation.URL = textBox2.Text;
             }
         }
-
-        private void StationEditor_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

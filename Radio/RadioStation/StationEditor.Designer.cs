@@ -95,7 +95,6 @@ namespace Radio
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StationCreator_FormClosed);
-            this.Load += new System.EventHandler(this.StationEditor_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
