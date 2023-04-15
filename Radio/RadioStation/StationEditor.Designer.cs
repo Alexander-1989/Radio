@@ -78,7 +78,7 @@ namespace Radio
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // StationCreator
+            // StationEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -91,10 +91,11 @@ namespace Radio
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "StationCreator";
+            this.Name = "StationEditor";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StationCreator_FormClosed);
+            this.Load += new System.EventHandler(this.StationEditor_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -42,9 +42,9 @@ namespace Radio
             return text.IndexOf(value, StringComparison.OrdinalIgnoreCase) > -1;
         }
 
-        internal static Utility.Validator GetValidator(this Control control)
+        internal static Service.Validator GetValidator(this Control control)
         {
-            return new Utility.Validator(control);
+            return new Service.Validator(control);
         }
     }
 }
