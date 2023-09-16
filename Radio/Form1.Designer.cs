@@ -81,7 +81,7 @@ namespace Radio
             this.button1.TabIndex = 2;
             this.button1.Text = "Play";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // listBox1
             // 
@@ -99,7 +99,7 @@ namespace Radio
             this.button2.TabIndex = 3;
             this.button2.Text = "Next";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // SearchBox
             // 
@@ -116,7 +116,7 @@ namespace Radio
             this.button4.TabIndex = 5;
             this.button4.Text = "Stop";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.Click += new System.EventHandler(this.Button4_Click);
             // 
             // button3
             // 
@@ -126,7 +126,7 @@ namespace Radio
             this.button3.TabIndex = 4;
             this.button3.Text = "Prev";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // VolumeScrollBar
             // 
@@ -159,7 +159,7 @@ namespace Radio
             this.materialSwitch1.TabIndex = 10;
             this.materialSwitch1.Text = "Theme";
             this.materialSwitch1.UseVisualStyleBackColor = true;
-            this.materialSwitch1.CheckedChanged += new System.EventHandler(this.materialSwitch1_CheckedChanged);
+            this.materialSwitch1.CheckedChanged += new System.EventHandler(this.MaterialSwitch1_CheckedChanged);
             // 
             // label2
             // 
@@ -180,12 +180,12 @@ namespace Radio
             this.muteBox.Size = new System.Drawing.Size(15, 14);
             this.muteBox.TabIndex = 7;
             this.muteBox.UseVisualStyleBackColor = true;
-            this.muteBox.CheckedChanged += new System.EventHandler(this.muteBox_CheckedChanged);
+            this.muteBox.CheckedChanged += new System.EventHandler(this.MuteBox_CheckedChanged);
             // 
             // timer1
             // 
             this.timer1.Interval = 250;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // contextMenuStrip1
             // 
@@ -204,7 +204,7 @@ namespace Radio
             this.copyStationAddressToolStripMenuItem.Name = "copyStationAddressToolStripMenuItem";
             this.copyStationAddressToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.copyStationAddressToolStripMenuItem.Text = "Copy Selected Station URL";
-            this.copyStationAddressToolStripMenuItem.Click += new System.EventHandler(this.copyStationAddressToolStripMenuItem_Click);
+            this.copyStationAddressToolStripMenuItem.Click += new System.EventHandler(this.CopyStationAddressToolStripMenuItem_Click);
             // 
             // sortToolStripMenuItem
             // 
@@ -223,35 +223,35 @@ namespace Radio
             this.toolStripComboBox1.Name = "toolStripComboBox1";
             this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
             this.toolStripComboBox1.Text = "Default";
-            this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
+            this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox1_SelectedIndexChanged);
             // 
             // getInfoToolStripMenuItem
             // 
             this.getInfoToolStripMenuItem.Name = "getInfoToolStripMenuItem";
             this.getInfoToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.getInfoToolStripMenuItem.Text = "Get Info";
-            this.getInfoToolStripMenuItem.Click += new System.EventHandler(this.getInfoToolStripMenuItem_Click);
+            this.getInfoToolStripMenuItem.Click += new System.EventHandler(this.GetInfoToolStripMenuItem_Click);
             // 
             // renameToolStripMenuItem
             // 
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
             this.renameToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.renameToolStripMenuItem.Text = "Rename";
-            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+            this.renameToolStripMenuItem.Click += new System.EventHandler(this.RenameToolStripMenuItem_Click);
             // 
             // addNewStationToolStripMenuItem
             // 
             this.addNewStationToolStripMenuItem.Name = "addNewStationToolStripMenuItem";
             this.addNewStationToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.addNewStationToolStripMenuItem.Text = "Add New Station";
-            this.addNewStationToolStripMenuItem.Click += new System.EventHandler(this.addNewStationToolStripMenuItem_Click);
+            this.addNewStationToolStripMenuItem.Click += new System.EventHandler(this.AddNewStationToolStripMenuItem_Click);
             // 
             // removeSelectedStationToolStripMenuItem
             // 
             this.removeSelectedStationToolStripMenuItem.Name = "removeSelectedStationToolStripMenuItem";
             this.removeSelectedStationToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.removeSelectedStationToolStripMenuItem.Text = "Remove selected station";
-            this.removeSelectedStationToolStripMenuItem.Click += new System.EventHandler(this.removeSelectedStationToolStripMenuItem_Click);
+            this.removeSelectedStationToolStripMenuItem.Click += new System.EventHandler(this.RemoveSelectedStationToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -287,35 +287,35 @@ namespace Radio
             this.importStationsFromFileToolStripMenuItem.Name = "importStationsFromFileToolStripMenuItem";
             this.importStationsFromFileToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.importStationsFromFileToolStripMenuItem.Text = "Import Stations From File";
-            this.importStationsFromFileToolStripMenuItem.Click += new System.EventHandler(this.importStationsFromFileToolStripMenuItem_Click);
+            this.importStationsFromFileToolStripMenuItem.Click += new System.EventHandler(this.ImportStationsFromFileToolStripMenuItem_Click);
             // 
             // exportStationsToXMLToolStripMenuItem
             // 
             this.exportStationsToXMLToolStripMenuItem.Name = "exportStationsToXMLToolStripMenuItem";
             this.exportStationsToXMLToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.exportStationsToXMLToolStripMenuItem.Text = "Export Stations To XML";
-            this.exportStationsToXMLToolStripMenuItem.Click += new System.EventHandler(this.exportStationsToXMLToolStripMenuItem_Click);
+            this.exportStationsToXMLToolStripMenuItem.Click += new System.EventHandler(this.ExportStationsToXMLToolStripMenuItem_Click);
             // 
             // getScreenToolStripMenuItem
             // 
             this.getScreenToolStripMenuItem.Name = "getScreenToolStripMenuItem";
             this.getScreenToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.getScreenToolStripMenuItem.Text = "Get Screen";
-            this.getScreenToolStripMenuItem.Click += new System.EventHandler(this.getScreenToolStripMenuItem_Click);
+            this.getScreenToolStripMenuItem.Click += new System.EventHandler(this.GetScreenToolStripMenuItem_Click);
             // 
             // minimizeToolStripMenuItem
             // 
             this.minimizeToolStripMenuItem.Name = "minimizeToolStripMenuItem";
             this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.minimizeToolStripMenuItem.Text = "Minimize on close";
-            this.minimizeToolStripMenuItem.Click += new System.EventHandler(this.minimizeToolStripMenuItem_Click);
+            this.minimizeToolStripMenuItem.Click += new System.EventHandler(this.MinimizeToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // label3
             // 
@@ -360,14 +360,14 @@ namespace Radio
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
             this.exitToolStripMenuItem1.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
-            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
+            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitToolStripMenuItem1_Click);
             // 
             // Form1
             // 

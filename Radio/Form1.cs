@@ -321,12 +321,12 @@ namespace Radio
             ShowVolume(volume);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             PlayStation();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             if (!listBox1.Items.IsNullOrEmpty())
             {
@@ -343,7 +343,7 @@ namespace Radio
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)
         {
             if (!listBox1.Items.IsNullOrEmpty())
             {
@@ -360,7 +360,7 @@ namespace Radio
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void Button4_Click(object sender, EventArgs e)
         {
             Stop();
         }
@@ -393,7 +393,7 @@ namespace Radio
             serrializer.WriteToFile(defaultXmlStationFile, stationList);
         }
 
-        private void materialSwitch1_CheckedChanged(object sender, EventArgs e)
+        private void MaterialSwitch1_CheckedChanged(object sender, EventArgs e)
         {
             if (materialSwitch1.Checked)
             {
@@ -405,18 +405,18 @@ namespace Radio
             }
         }
 
-        private void muteBox_CheckedChanged(object sender, EventArgs e)
+        private void MuteBox_CheckedChanged(object sender, EventArgs e)
         {
             VolumeScrollBar.Enabled = !muteBox.Checked;
             Mute(muteBox.Checked);
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             Text = Text.Substring(1) + Text[0];
         }
 
-        private void copyStationAddressToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CopyStationAddressToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedItem is RadioStation station)
             {
@@ -485,13 +485,13 @@ namespace Radio
             }
         }
 
-        private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ToolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Enum.TryParse(toolStripComboBox1.Text, out sort);
             SortListBox(listBox1, sort);
         }
 
-        private void importStationsFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ImportStationsFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "XML File|*.xml|Text File|*.txt";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -500,7 +500,7 @@ namespace Radio
             }
         }
 
-        private void exportStationsToXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExportStationsToXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Filter = "XML File|*.xml";
             saveFileDialog1.FileName = "Stations.xml";
@@ -514,12 +514,12 @@ namespace Radio
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CloseRadio();
         }
 
-        private void getInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void GetInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedItem is RadioStation station)
             {
@@ -540,12 +540,12 @@ namespace Radio
             }
         }
 
-        private void getScreenToolStripMenuItem_Click(object sender, EventArgs e)
+        private void GetScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GetScreen();
         }
 
-        private void addNewStationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AddNewStationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (StationEditor stationCreator = new StationEditor())
             {
@@ -565,7 +565,7 @@ namespace Radio
             }
         }
 
-        private void removeSelectedStationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RemoveSelectedStationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure?", "Remove this station?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                 == DialogResult.Yes)
@@ -579,7 +579,7 @@ namespace Radio
             }
         }
 
-        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RenameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedItem is RadioStation item)
             {
@@ -592,13 +592,13 @@ namespace Radio
             }
         }
 
-        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ShowRadio();
             CloseRadio();
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowRadio();
         }
@@ -612,9 +612,10 @@ namespace Radio
             }
         }
 
-        private void minimizeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MinimizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            minimizeToolStripMenuItem.Checked = isMinimize = !minimizeToolStripMenuItem.Checked;
+            minimizeToolStripMenuItem.Checked = !minimizeToolStripMenuItem.Checked;
+            isMinimize = minimizeToolStripMenuItem.Checked;
         }
 
         //protected override void WndProc(ref Message m)

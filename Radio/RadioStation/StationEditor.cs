@@ -6,14 +6,16 @@ namespace Radio
 {
     public partial class StationEditor : Form
     {
-        private readonly RadioStation _currentStation = null;
+        private readonly RadioStation currentStation = null;
 
-        public StationEditor() : this(null) { }
-
-        public StationEditor(RadioStation station)
+        public StationEditor()
         {
             InitializeComponent();
-            _currentStation = station;
+        }
+
+        public StationEditor(RadioStation station) : this()
+        {
+            currentStation = station;
             if (station != null)
             {
                 textBox1.Text = station.Name;
@@ -32,28 +34,25 @@ namespace Radio
             return ValidateText() ? new RadioStation(textBox1.Text, textBox2.Text) : null;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             ValidateText();
         }
 
-        public new void ShowDialog(IWin32Window owner)
+        protected override void OnPaint(PaintEventArgs e)
         {
-            if (owner is Form form)
-            {
-                int x = form.Location.X + ((form.Width - Width) / 2);
-                int y = form.Location.Y + ((form.Height - Height) / 2);
-                Location = new Point(x, y);
-            }
-            base.ShowDialog(owner);
+            base.OnPaint(e);
+            int x = Owner.Location.X + ((Owner.Width - Width) / 2);
+            int y = Owner.Location.Y + ((Owner.Height - Height) / 2);
+            Location = new Point(x, y);
         }
 
         private void StationCreator_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (_currentStation != null && ValidateText())
+            if (currentStation != null && ValidateText())
             {
-                _currentStation.Name = textBox1.Text;
-                _currentStation.URL = textBox2.Text;
+                currentStation.Name = textBox1.Text;
+                currentStation.URL = textBox2.Text;
             }
         }
     }

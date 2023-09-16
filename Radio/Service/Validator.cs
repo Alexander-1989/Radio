@@ -6,32 +6,32 @@ namespace Radio.Service
 {
     public class Validator
     {
-        private readonly Control _control = null;
-        private readonly string _text = null;
-        private bool _isValidate = false;
+        private readonly Control control = null;
+        private readonly string text = null;
+        private bool isValidate = false;
 
         public Validator(Control control)
         {
-            _control = control;
-            _text = control.Text;
-            _isValidate = false;
+            this.control = control;
+            text = control.Text;
+            isValidate = false;
         }
 
         public Validator SetValidateRules(params string[] values)
         {
-            if (!string.IsNullOrEmpty(_text))
+            if (!string.IsNullOrEmpty(text))
             {
                 if (values.IsNullOrEmpty())
                 {
-                    _isValidate = true;
+                    isValidate = true;
                 }
                 else
                 {
                     foreach (string value in values)
                     {
-                        if (_control.Text.IndexOf(value, StringComparison.OrdinalIgnoreCase) > -1)
+                        if (control.Text.IndexOf(value, StringComparison.OrdinalIgnoreCase) > -1)
                         {
-                            _isValidate = true;
+                            isValidate = true;
                             break;
                         }
                     }
@@ -42,8 +42,8 @@ namespace Radio.Service
 
         public bool Validate()
         {
-            _control.BackColor = _isValidate ? Color.Green : Color.Red;
-            return _isValidate;
+            control.BackColor = isValidate ? Color.Green : Color.Red;
+            return isValidate;
         }
     }
 }
